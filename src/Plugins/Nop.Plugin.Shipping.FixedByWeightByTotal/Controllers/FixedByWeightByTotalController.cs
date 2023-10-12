@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Directory;
+using Nop.Core.Security;
 using Nop.Plugin.Shipping.FixedByWeightByTotal.Domain;
 using Nop.Plugin.Shipping.FixedByWeightByTotal.Models;
 using Nop.Plugin.Shipping.FixedByWeightByTotal.Services;
@@ -88,7 +89,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
 
         public async Task<IActionResult> Configure(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var model = new ConfigurationModel
@@ -135,7 +136,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
         [HttpPost]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return Content("Access denied");
 
             //save settings
@@ -148,7 +149,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveMode(bool value)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return Content("Access denied");
 
             //save settings
@@ -163,7 +164,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
         [HttpPost]
         public async Task<IActionResult> FixedShippingRateList(ConfigurationModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             var shippingMethods = (await _shippingService.GetAllShippingMethodsAsync()).ToPagedList(searchModel);
@@ -188,7 +189,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateFixedShippingRate(FixedRateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return Content("Access denied");
 
             await _settingService.SetSettingAsync(string.Format(FixedByWeightByTotalDefaults.FixedRateSettingsKey, model.ShippingMethodId), model.Rate, 0, false);
@@ -206,7 +207,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
         [HttpPost]
         public async Task<IActionResult> RateByWeightByTotalList(ConfigurationModel searchModel, ConfigurationModel filter)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             //var records = _shippingByWeightService.GetAll(command.Page - 1, command.PageSize);
@@ -296,7 +297,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
 
         public async Task<IActionResult> AddRateByWeightByTotalPopup()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var model = new ShippingByWeightByTotalModel
@@ -336,7 +337,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRateByWeightByTotalPopup(ShippingByWeightByTotalModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             await _shippingByWeightService.InsertShippingByWeightRecordAsync(new ShippingByWeightByTotalRecord
@@ -365,7 +366,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
 
         public async Task<IActionResult> EditRateByWeightByTotalPopup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var sbw = await _shippingByWeightService.GetByIdAsync(id);
@@ -432,7 +433,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRateByWeightByTotalPopup(ShippingByWeightByTotalModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var sbw = await _shippingByWeightService.GetByIdAsync(model.Id);
@@ -466,7 +467,7 @@ namespace Nop.Plugin.Shipping.FixedByWeightByTotal.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteRateByWeightByTotal(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return Content("Access denied");
 
             var sbw = await _shippingByWeightService.GetByIdAsync(id);

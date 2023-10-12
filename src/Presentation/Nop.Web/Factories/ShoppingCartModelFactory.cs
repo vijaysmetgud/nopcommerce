@@ -13,6 +13,7 @@ using Nop.Core.Domain.Shipping;
 using Nop.Core.Domain.Tax;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Http.Extensions;
+using Nop.Core.Security;
 using Nop.Services.Attributes;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
@@ -250,7 +251,7 @@ namespace Nop.Web.Factories
                         attributeModel.Values.Add(attributeValueModel);
 
                         //display price if allowed
-                        if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices))
+                        if (await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices))
                         {
                             var (priceAdjustmentBase, _) = await _taxService.GetCheckoutAttributePriceAsync(attribute, attributeValue);
                             var priceAdjustment =
@@ -985,7 +986,7 @@ namespace Nop.Web.Factories
 
             model.EmailWishlistEnabled = _shoppingCartSettings.EmailWishlistEnabled;
             model.IsEditable = isEditable;
-            model.DisplayAddToCart = await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart);
+            model.DisplayAddToCart = await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart);
             model.DisplayTaxShippingInfo = _catalogSettings.DisplayTaxShippingInfoWishlist;
 
             if (!cart.Any())

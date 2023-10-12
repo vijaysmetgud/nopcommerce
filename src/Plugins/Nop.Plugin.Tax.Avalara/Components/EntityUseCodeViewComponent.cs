@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Security;
 using Nop.Plugin.Tax.Avalara.Models.EntityUseCode;
 using Nop.Plugin.Tax.Avalara.Services;
 using Nop.Services.Attributes;
@@ -86,7 +87,7 @@ namespace Nop.Plugin.Tax.Avalara.Components
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return Content(string.Empty);
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return Content(string.Empty);
 
             //ensure that it's a proper widget zone

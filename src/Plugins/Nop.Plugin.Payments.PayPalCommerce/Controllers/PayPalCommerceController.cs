@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Security;
 using Nop.Plugin.Payments.PayPalCommerce.Domain;
 using Nop.Plugin.Payments.PayPalCommerce.Models;
 using Nop.Plugin.Payments.PayPalCommerce.Services;
@@ -164,7 +165,7 @@ namespace Nop.Plugin.Payments.PayPalCommerce.Controllers
 
         public async Task<IActionResult> Configure(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             var storeId = await _storeContext.GetActiveStoreScopeConfigurationAsync();
@@ -267,7 +268,7 @@ namespace Nop.Plugin.Payments.PayPalCommerce.Controllers
         [FormValueRequired("save")]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             var storeId = await _storeContext.GetActiveStoreScopeConfigurationAsync();

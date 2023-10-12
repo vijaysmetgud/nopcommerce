@@ -21,6 +21,7 @@ using Nop.Core.Domain.Tax;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Events;
 using Nop.Core.Infrastructure;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Data.Configuration;
 using Nop.Services.Authentication.MultiFactor;
@@ -176,7 +177,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> AppSettings()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAppSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAppSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -188,7 +189,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AppSettings(AppSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAppSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAppSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -229,7 +230,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Blog()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -241,7 +242,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Blog(BlogSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -283,7 +284,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Vendor()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -295,7 +296,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Vendor(VendorSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -340,7 +341,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Forum()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -352,7 +353,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Forum(ForumSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -409,7 +410,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> News()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -421,7 +422,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> News(NewsSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -464,7 +465,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Shipping()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -476,7 +477,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Shipping(ShippingSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -553,7 +554,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Tax()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -565,7 +566,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Tax(TaxSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -649,7 +650,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Catalog()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -661,7 +662,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Catalog(CatalogSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -793,7 +794,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SortOptionsList(SortOptionSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -805,7 +806,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SortOptionUpdate(SortOptionModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             var storeScope = await _storeContext.GetActiveStoreScopeConfigurationAsync();
@@ -828,7 +829,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> RewardPoints()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -840,7 +841,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> RewardPoints(RewardPointsSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -893,7 +894,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Order()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -905,7 +906,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Order(OrderSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -983,7 +984,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ShoppingCart()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -995,7 +996,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ShoppingCart(ShoppingCartSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -1048,7 +1049,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Media()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -1061,7 +1062,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> Media(MediaSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -1115,7 +1116,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("change-picture-storage")]
         public virtual async Task<IActionResult> ChangePictureStorage()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             await _pictureService.SetIsStoreInDbAsync(!await _pictureService.IsStoreInDbAsync());
@@ -1130,7 +1131,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CustomerUser()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -1142,7 +1143,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CustomerUser(CustomerUserSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -1236,7 +1237,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Gdpr()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -1248,7 +1249,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Gdpr(GdprSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -1288,7 +1289,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> GdprConsentList(GdprConsentSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -1299,7 +1300,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateGdprConsent()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -1311,7 +1312,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateGdprConsent(GdprConsentModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -1336,7 +1337,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditGdprConsent(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a consent with the specified id
@@ -1353,7 +1354,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditGdprConsent(GdprConsentModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a GDPR consent with the specified id
@@ -1384,7 +1385,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteGdprConsent(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a GDPR consent with the specified id
@@ -1403,7 +1404,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> GeneralCommon(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -1427,7 +1428,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> GeneralCommon(GeneralCommonSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -1754,7 +1755,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("changeencryptionkey")]
         public virtual async Task<IActionResult> ChangeEncryptionKey(GeneralCommonSettingsModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             var storeScope = await _storeContext.GetActiveStoreScopeConfigurationAsync();
@@ -1831,7 +1832,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> UploadLocalePattern()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             try
@@ -1850,7 +1851,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> UploadIcons(IFormFile iconsFile)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             try
@@ -1912,7 +1913,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> AllSettings(string settingName)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -1924,7 +1925,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AllSettings(SettingSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -1936,7 +1937,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SettingUpdate(SettingModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (model.Name != null)
@@ -1969,7 +1970,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SettingAdd(SettingModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (model.Name != null)
@@ -1995,7 +1996,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SettingDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a setting with the specified id

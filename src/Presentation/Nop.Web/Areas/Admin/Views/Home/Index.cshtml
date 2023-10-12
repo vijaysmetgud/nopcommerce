@@ -1,14 +1,15 @@
 ﻿@model DashboardModel
 @inject IPermissionService permissionService
 @using Nop.Services.Security
+@using Nop.Core.Security
 @{
     //page title
     ViewBag.PageTitle = T("Admin.Dashboard").Text;
 
-    var canManageOrders = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageOrders);
-    var canManageCustomers = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers);
-    var canManageProducts = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts);
-    var canManageReturnRequests = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests);
+    var canManageOrders = await permissionService.AuthorizeAsync(StandardPermission.ManageOrders);
+    var canManageCustomers = await permissionService.AuthorizeAsync(StandardPermission.ManageCustomers);
+    var canManageProducts = await permissionService.AuthorizeAsync(StandardPermission.ManageProducts);
+    var canManageReturnRequests = await permissionService.AuthorizeAsync(StandardPermission.ManageReturnRequests);
 
     //close configuration steps value
     const string closeCardAttributeName = "CloseConfigurationSteps";

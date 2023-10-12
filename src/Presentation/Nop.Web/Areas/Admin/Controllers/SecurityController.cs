@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 using Nop.Core;
 using Nop.Core.Domain.Security;
+using Nop.Core.Security;
 using Nop.Services.Customers;
 using Nop.Services.Localization;
 using Nop.Services.Messages;
@@ -63,9 +63,55 @@ namespace Nop.Web.Areas.Admin.Controllers
             return View();
         }
 
+        public virtual async Task<IActionResult> PermissionEditPopup(int id)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
+                return AccessDeniedView();
+
+            var permissionRecord = await _permissionService.GetPermissionRecordByIdAsync(id);
+
+            return View(await _securityModelFactory.PreparePermissionItemModelAsync(permissionRecord));
+        }
+
+        [HttpPost]
+        public virtual async Task<IActionResult> PermissionEditPopup(PermissionItemModel model)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
+                return AccessDeniedView();
+            
+            if (ModelState.IsValid)
+            {
+                var mapping = await _permissionService.GetMappingByPermissionRecordIdAsync(model.Id);
+
+                var rolesForDelete = mapping.Where(p => !model.SelectedCustomerRoleIds.Contains(p.CustomerRoleId))
+                    .Select(p => p.CustomerRoleId);
+
+                var rolesToAdd = model.SelectedCustomerRoleIds.Where(p => mapping.All(m => m.CustomerRoleId != p));
+
+                foreach (var customerRoleId in rolesForDelete) 
+                    await _permissionService.DeletePermissionRecordCustomerRoleMappingAsync(model.Id, customerRoleId);
+
+                foreach (var customerRoleId in rolesToAdd)
+                    await _permissionService.InsertPermissionRecordCustomerRoleMappingAsync(new PermissionRecordCustomerRoleMapping
+                    {
+                        PermissionRecordId = model.Id,
+                        CustomerRoleId = customerRoleId
+                    });
+                ViewBag.RefreshPage = true;
+
+                var permissionRecord = await _permissionService.GetPermissionRecordByIdAsync(model.Id);
+                model = await _securityModelFactory.PreparePermissionItemModelAsync(permissionRecord);
+
+                return View(model);
+            }
+            
+            //if we got this far, something failed, redisplay form
+            return View(model);
+        }
+
         public virtual async Task<IActionResult> Permissions()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return AccessDeniedView();
 
             //prepare model
@@ -74,45 +120,27 @@ namespace Nop.Web.Areas.Admin.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("Permissions")]
-        public virtual async Task<IActionResult> PermissionsSave(PermissionMappingModel model, IFormCollection form)
+
+        [HttpPost]
+        public virtual async Task<IActionResult> PermissionCategories(PermissionCategorySearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
-                return AccessDeniedView();
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
+                return await AccessDeniedDataTablesJson();
+            
+            var model = await _securityModelFactory.PreparePermissionCategoryListModelAsync(searchModel);
 
-            var permissionRecords = await _permissionService.GetAllPermissionRecordsAsync();
-            var customerRoles = await _customerService.GetAllCustomerRolesAsync(true);
+            return Json(model);
+        }
 
-            foreach (var cr in customerRoles)
-            {
-                var formKey = "allow_" + cr.Id;
-                var permissionRecordSystemNamesToRestrict = !StringValues.IsNullOrEmpty(form[formKey])
-                    ? form[formKey].ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList()
-                    : new List<string>();
+        [HttpPost]
+        public virtual async Task<IActionResult> PermissionCategory(PermissionItemSearchModel searchModel)
+        {
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageOrders))
+                return await AccessDeniedDataTablesJson();
+            
+            var model = await _securityModelFactory.PreparePermissionItemListModelAsync(searchModel);
 
-                foreach (var pr in permissionRecords)
-                {
-                    var allow = permissionRecordSystemNamesToRestrict.Contains(pr.SystemName);
-
-                    if (allow == await _permissionService.AuthorizeAsync(pr.SystemName, cr.Id))
-                        continue;
-
-                    if (allow)
-                    {
-                        await _permissionService.InsertPermissionRecordCustomerRoleMappingAsync(new PermissionRecordCustomerRoleMapping { PermissionRecordId = pr.Id, CustomerRoleId = cr.Id });
-                    }
-                    else
-                    {
-                        await _permissionService.DeletePermissionRecordCustomerRoleMappingAsync(pr.Id, cr.Id);
-                    }
-
-                    await _permissionService.UpdatePermissionRecordAsync(pr);
-                }
-            }
-
-            _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Admin.Configuration.ACL.Updated"));
-
-            return RedirectToAction("Permissions");
+            return Json(model);
         }
 
         #endregion

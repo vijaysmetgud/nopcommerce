@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Services.Security;
 
@@ -87,7 +88,7 @@ namespace Nop.Web.Framework.Mvc.Filters
                 if (context.Filters.Any(filter => filter is AuthorizeAdminFilter))
                 {
                     //authorize permission of access to the admin area
-                    if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel))
+                    if (!await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel))
                         context.Result = new ChallengeResult();
                 }
             }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Nop.Core;
 using Nop.Core.Domain;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Services.Security;
 using Nop.Services.Topics;
@@ -132,7 +133,7 @@ namespace Nop.Web.Framework.Mvc.Filters
                 }
 
                 //check whether current customer has access to a closed store
-                if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessClosedStore))
+                if (await _permissionService.AuthorizeAsync(StandardPermission.AccessClosedStore))
                     return;
 
                 //store is closed and no access, so redirect to 'StoreClosed' page

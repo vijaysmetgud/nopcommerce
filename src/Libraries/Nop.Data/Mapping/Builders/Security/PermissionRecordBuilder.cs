@@ -18,8 +18,7 @@ namespace Nop.Data.Mapping.Builders.Security
         {
             table
                 .WithColumn(nameof(PermissionRecord.Name)).AsString(int.MaxValue).NotNullable()
-                .WithColumn(nameof(PermissionRecord.SystemName)).AsString(255).NotNullable()
-                .WithColumn(nameof(PermissionRecord.Category)).AsString(255).NotNullable();
+                .WithColumn(nameof(PermissionRecord.SystemName)).AsString(255).NotNullable();
         }
 
         #endregion

@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
-using Nop.Plugin.Tax.FixedOrByCountryStateZip.Domain;
+ using Nop.Core.Security;
+ using Nop.Plugin.Tax.FixedOrByCountryStateZip.Domain;
 using Nop.Plugin.Tax.FixedOrByCountryStateZip.Models;
 using Nop.Plugin.Tax.FixedOrByCountryStateZip.Services;
 using Nop.Services.Common;
@@ -76,7 +77,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
 
         public async Task<IActionResult> Configure(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             var taxCategories = await _taxCategoryService.GetAllTaxCategoriesAsync();
@@ -135,7 +136,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveMode(bool value)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return Content("Access denied");
 
             //save settings
@@ -150,7 +151,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
         [HttpPost]
         public async Task<IActionResult> FixedRatesList(ConfigurationModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return await AccessDeniedDataTablesJson();
 
             var categories = (await _taxCategoryService.GetAllTaxCategoriesAsync()).ToPagedList(searchModel);
@@ -173,7 +174,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
         [HttpPost]
         public async Task<IActionResult> FixedRateUpdate(FixedTaxRateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return Content("Access denied");
 
             await _settingService.SetSettingAsync(string.Format(FixedOrByCountryStateZipDefaults.FixedRateSettingsKey, model.TaxCategoryId), model.Rate);
@@ -188,7 +189,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
         [HttpPost]
         public async Task<IActionResult> RatesByCountryStateZipList(ConfigurationModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return await AccessDeniedDataTablesJson();
 
             var records = await _taxRateService.GetAllTaxRatesAsync(searchModel.Page - 1, searchModel.PageSize);
@@ -218,7 +219,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRateByCountryStateZip(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return Content("Access denied");
 
             await _taxRateService.InsertTaxRateAsync(new TaxRate
@@ -237,7 +238,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateRateByCountryStateZip(CountryStateZipModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return Content("Access denied");
 
             var taxRate = await _taxRateService.GetTaxRateByIdAsync(model.Id);
@@ -251,7 +252,7 @@ namespace Nop.Plugin.Tax.FixedOrByCountryStateZip.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteRateByCountryStateZip(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return Content("Access denied");
 
             var taxRate = await _taxRateService.GetTaxRateByIdAsync(id);

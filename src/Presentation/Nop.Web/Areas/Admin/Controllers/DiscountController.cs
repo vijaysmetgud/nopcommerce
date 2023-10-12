@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Discounts;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Discounts;
 using Nop.Services.Localization;
@@ -75,7 +76,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //whether discounts are ignored
@@ -91,7 +92,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(DiscountSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -102,7 +103,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //prepare model
@@ -114,7 +115,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(DiscountModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -143,7 +144,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -160,7 +161,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(DiscountModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -215,7 +216,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -247,7 +248,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> GetDiscountRequirementConfigurationUrl(string systemName, int discountId, int? discountRequirementId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             if (string.IsNullOrEmpty(systemName))
@@ -267,7 +268,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         public virtual async Task<IActionResult> GetDiscountRequirements(int discountId, int discountRequirementId,
             int? parentId, int? interactionTypeId, bool deleteRequirement)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             var requirements = new List<DiscountRequirementRuleModel>();
@@ -355,7 +356,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> AddNewGroup(int discountId, string name)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             var discount = await _discountService.GetDiscountByIdAsync(discountId);
@@ -422,7 +423,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductList(DiscountProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a discount with the specified id
@@ -437,7 +438,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductDelete(int discountId, int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -460,7 +461,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAddPopup(int discountId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //prepare model
@@ -472,7 +473,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAddPopupList(AddProductToDiscountSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -485,7 +486,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> ProductAddPopup(AddProductToDiscountModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -517,7 +518,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CategoryList(DiscountCategorySearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a discount with the specified id
@@ -532,7 +533,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CategoryDelete(int discountId, int categoryId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -554,7 +555,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CategoryAddPopup(int discountId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //prepare model
@@ -566,7 +567,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CategoryAddPopupList(AddCategoryToDiscountSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -579,7 +580,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> CategoryAddPopup(AddCategoryToDiscountModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -610,7 +611,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ManufacturerList(DiscountManufacturerSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a discount with the specified id
@@ -625,7 +626,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ManufacturerDelete(int discountId, int manufacturerId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -647,7 +648,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ManufacturerAddPopup(int discountId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //prepare model
@@ -659,7 +660,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ManufacturerAddPopupList(AddManufacturerToDiscountSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -672,7 +673,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> ManufacturerAddPopup(AddManufacturerToDiscountModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id
@@ -703,7 +704,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> UsageHistoryList(DiscountUsageHistorySearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a discount with the specified id
@@ -719,7 +720,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> UsageHistoryDelete(int discountId, int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return AccessDeniedView();
 
             //try to get a discount with the specified id

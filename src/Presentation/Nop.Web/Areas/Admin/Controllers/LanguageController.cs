@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core.Domain.Localization;
 using Nop.Core.Infrastructure;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
@@ -103,7 +104,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             //prepare model
@@ -115,7 +116,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(LanguageSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -126,7 +127,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             //prepare model
@@ -138,7 +139,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(LanguageModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -171,7 +172,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             //try to get a language with the specified id
@@ -188,7 +189,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(LanguageModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             //try to get a language with the specified id
@@ -237,7 +238,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             //try to get a language with the specified id
@@ -270,7 +271,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<JsonResult> GetAvailableFlagFileNames()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return Json("Access denied");
 
             var flagNames = _fileProvider
@@ -309,7 +310,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Resources(LocaleResourceSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a language with the specified id
@@ -327,7 +328,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ResourceUpdate([Validate] LocaleResourceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             if (model.ResourceName != null)
@@ -363,7 +364,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ResourceAdd(int languageId, [Validate] LocaleResourceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             if (model.ResourceName != null)
@@ -397,7 +398,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ResourceDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             //try to get a locale resource with the specified id
@@ -415,7 +416,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ExportXml(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             //try to get a language with the specified id
@@ -438,7 +439,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ImportXml(int id, IFormFile importxmlfile)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageLanguages))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageLanguages))
                 return AccessDeniedView();
 
             //try to get a language with the specified id

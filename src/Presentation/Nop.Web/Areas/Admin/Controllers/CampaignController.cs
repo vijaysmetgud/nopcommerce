@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Core.Domain.Messages;
+using Nop.Core.Security;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
@@ -85,7 +86,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return AccessDeniedView();
 
             //prepare model
@@ -97,7 +98,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(CampaignSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -108,7 +109,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return AccessDeniedView();
 
             //prepare model
@@ -120,7 +121,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(CampaignModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -151,7 +152,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return AccessDeniedView();
 
             //try to get a campaign with the specified id
@@ -170,7 +171,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Edit(CampaignModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return AccessDeniedView();
 
             //try to get a campaign with the specified id
@@ -207,7 +208,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("send-test-email")]
         public virtual async Task<IActionResult> SendTestEmail(CampaignModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return AccessDeniedView();
 
             //try to get a campaign with the specified id
@@ -262,7 +263,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("send-mass-email")]
         public virtual async Task<IActionResult> SendMassEmail(CampaignModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return AccessDeniedView();
 
             //try to get a campaign with the specified id
@@ -303,7 +304,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCampaigns))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCampaigns))
                 return AccessDeniedView();
 
             //try to get a campaign with the specified id

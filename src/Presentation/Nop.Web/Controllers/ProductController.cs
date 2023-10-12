@@ -6,6 +6,7 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Customers;
 using Nop.Services.Html;
@@ -173,7 +174,7 @@ namespace Nop.Web.Controllers
                 !_productService.ProductIsAvailable(product);
             //Check whether the current user has a "Manage products" permission (usually a store owner)
             //We should allows him (her) to use "Preview" functionality
-            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts);
+            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts);
             if (notAvailable && !hasAdminAccess)
                 return InvokeHttp404();
 
@@ -213,8 +214,8 @@ namespace Nop.Web.Controllers
             await _recentlyViewedProductsService.AddProductToRecentlyViewedListAsync(product.Id);
 
             //display "edit" (manage) link
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) &&
-                await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) &&
+                await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
             {
                 //a vendor should have access only to his products
                 var currentVendor = await _workContext.GetCurrentVendorAsync();

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Primitives;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Vendors;
+using Nop.Core.Security;
 using Nop.Services.Attributes;
 using Nop.Services.Common;
 using Nop.Services.Customers;
@@ -212,7 +213,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return AccessDeniedView();
 
             //prepare model
@@ -224,7 +225,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(VendorSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -235,7 +236,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return AccessDeniedView();
 
             //prepare model
@@ -248,7 +249,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Create(VendorModel model, bool continueEditing, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return AccessDeniedView();
 
             //parse vendor attributes
@@ -311,7 +312,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return AccessDeniedView();
 
             //try to get a vendor with the specified id
@@ -328,7 +329,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(VendorModel model, bool continueEditing, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return AccessDeniedView();
 
             //try to get a vendor with the specified id
@@ -432,7 +433,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return AccessDeniedView();
 
             //try to get a vendor with the specified id
@@ -467,7 +468,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> VendorNotesSelect(VendorNoteSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a vendor with the specified id
@@ -482,7 +483,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> VendorNoteAdd(int vendorId, string message)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return AccessDeniedView();
 
             if (string.IsNullOrEmpty(message))
@@ -506,7 +507,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> VendorNoteDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 return AccessDeniedView();
 
             //try to get a vendor note with the specified id

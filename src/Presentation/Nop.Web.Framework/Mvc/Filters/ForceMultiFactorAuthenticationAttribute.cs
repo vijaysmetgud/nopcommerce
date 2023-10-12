@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Services.Authentication.MultiFactor;
 using Nop.Services.Common;
@@ -77,7 +78,7 @@ namespace Nop.Web.Framework.Mvc.Filters
                     return;
 
                 //whether the feature is enabled
-                if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableMultiFactorAuthentication))
+                if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableMultiFactorAuthentication))
                     return;
 
                 //don't validate on the 'Multi-factor authentication settings' page

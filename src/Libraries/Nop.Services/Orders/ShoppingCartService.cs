@@ -10,6 +10,7 @@ using Nop.Core.Domain.Discounts;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Stores;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Services.Attributes;
 using Nop.Services.Catalog;
@@ -1572,13 +1573,13 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException(nameof(product));
 
             var warnings = new List<string>();
-            if (shoppingCartType == ShoppingCartType.ShoppingCart && !await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart, customer))
+            if (shoppingCartType == ShoppingCartType.ShoppingCart && !await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart, customer))
             {
                 warnings.Add("Shopping cart is disabled");
                 return warnings;
             }
 
-            if (shoppingCartType == ShoppingCartType.Wishlist && !await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist, customer))
+            if (shoppingCartType == ShoppingCartType.Wishlist && !await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist, customer))
             {
                 warnings.Add("Wishlist is disabled");
                 return warnings;

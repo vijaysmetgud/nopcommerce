@@ -1,16 +1,12 @@
-﻿@using Nop.Core.Configuration
-@using Nop.Core.Domain.Catalog
+﻿@using Nop.Core.Domain.Catalog
 @using Nop.Core.Domain.Common
 @using Nop.Core.Domain.Seo
-@using Nop.Services.Security
 @using Nop.Core.Events
 
 @inject CatalogSettings catalogSettings
 @inject CommonSettings commonSettings
 @inject IEventPublisher eventPublisher
-@inject IPermissionService permissionService
 @inject SeoSettings seoSettings
-@inject AppSettings appSettings
 
 @{
     if (catalogSettings.DisplayAllPicturesOnCatalogPages)

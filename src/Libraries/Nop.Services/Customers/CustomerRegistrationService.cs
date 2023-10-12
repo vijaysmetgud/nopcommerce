@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Authentication;
 using Nop.Services.Authentication.MultiFactor;
 using Nop.Services.Common;
@@ -179,7 +180,7 @@ namespace Nop.Services.Customers
                 return CustomerLoginResults.WrongPassword;
             }
 
-            var selectedProvider = await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableMultiFactorAuthentication, customer)
+            var selectedProvider = await _permissionService.AuthorizeAsync(StandardPermission.EnableMultiFactorAuthentication, customer)
                 ? await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.SelectedMultiFactorAuthenticationProviderAttribute)
                 : null;
             var store = await _storeContext.GetCurrentStoreAsync();

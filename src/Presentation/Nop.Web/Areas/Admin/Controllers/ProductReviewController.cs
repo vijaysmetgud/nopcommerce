@@ -2,6 +2,7 @@
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Customers;
 using Nop.Services.Localization;
@@ -70,7 +71,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return AccessDeniedView();
 
             //prepare model
@@ -82,7 +83,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(ProductReviewSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -93,7 +94,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return AccessDeniedView();
 
             //try to get a product review with the specified id
@@ -115,7 +116,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(ProductReviewModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return AccessDeniedView();
 
             //try to get a product review with the specified id
@@ -188,7 +189,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return AccessDeniedView();
 
             //try to get a product review with the specified id
@@ -219,7 +220,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ApproveSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return AccessDeniedView();
 
             //a vendor does not have access to this functionality
@@ -252,7 +253,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DisapproveSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return AccessDeniedView();
 
             //a vendor does not have access to this functionality
@@ -282,7 +283,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return AccessDeniedView();
 
             //a vendor does not have access to this functionality
@@ -309,7 +310,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductReviewReviewTypeMappingList(ProductReviewReviewTypeMappingSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductReviews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductReviews))
                 return await AccessDeniedDataTablesJson();
             var productReview = await _productService.GetProductReviewByIdAsync(searchModel.ProductReviewId)
                 ?? throw new ArgumentException("No product review found with the specified id");

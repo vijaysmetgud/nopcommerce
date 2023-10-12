@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Plugin.Payments.CyberSource.Domain;
 using Nop.Plugin.Payments.CyberSource.Models;
 using Nop.Services.Configuration;
@@ -52,7 +53,7 @@ namespace Nop.Plugin.Payments.CyberSource.Controllers
 
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             var storeId = await _storeContext.GetActiveStoreScopeConfigurationAsync();
@@ -108,7 +109,7 @@ namespace Nop.Plugin.Payments.CyberSource.Controllers
         [HttpPost]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)

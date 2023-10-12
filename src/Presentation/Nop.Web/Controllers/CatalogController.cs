@@ -5,6 +5,7 @@ using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Rss;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
 using Nop.Services.Localization;
@@ -118,7 +119,7 @@ namespace Nop.Web.Controllers
                 store.Id);
 
             //display "edit" (manage) link
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCategories))
+            if (await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageCategories))
                 DisplayEditLink(Url.Action("Edit", "Category", new { id = category.Id, area = AreaNames.Admin }));
 
             //activity log
@@ -183,7 +184,7 @@ namespace Nop.Web.Controllers
                 store.Id);
 
             //display "edit" (manage) link
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 DisplayEditLink(Url.Action("Edit", "Manufacturer", new { id = manufacturer.Id, area = AreaNames.Admin }));
 
             //activity log
@@ -240,7 +241,7 @@ namespace Nop.Web.Controllers
                 store.Id);
 
             //display "edit" (manage) link
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageVendors))
+            if (await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageVendors))
                 DisplayEditLink(Url.Action("Edit", "Vendor", new { id = vendor.Id, area = AreaNames.Admin }));
 
             //model
@@ -470,7 +471,7 @@ namespace Nop.Web.Controllers
                 !await _storeMappingService.AuthorizeAsync(category);
             //Check whether the current user has a "Manage categories" permission (usually a store owner)
             //We should allows him (her) to use "Preview" functionality
-            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCategories);
+            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageCategories);
             if (notAvailable && !hasAdminAccess)
                 isAvailable = false;
 
@@ -493,7 +494,7 @@ namespace Nop.Web.Controllers
                 !await _storeMappingService.AuthorizeAsync(manufacturer);
             //Check whether the current user has a "Manage categories" permission (usually a store owner)
             //We should allows him (her) to use "Preview" functionality
-            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers);
+            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers);
             if (notAvailable && !hasAdminAccess)
                 isAvailable = false;
 

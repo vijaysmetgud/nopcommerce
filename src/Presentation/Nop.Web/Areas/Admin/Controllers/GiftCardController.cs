@@ -3,6 +3,7 @@ using Nop.Core;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Directory;
 using Nop.Services.Helpers;
@@ -84,7 +85,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return AccessDeniedView();
 
             //prepare model
@@ -96,7 +97,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> GiftCardList(GiftCardSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -107,7 +108,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return AccessDeniedView();
 
             //prepare model
@@ -119,7 +120,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(GiftCardModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -146,7 +147,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return AccessDeniedView();
 
             //try to get a gift card with the specified id
@@ -164,7 +165,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Edit(GiftCardModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return AccessDeniedView();
 
             //try to get a gift card with the specified id
@@ -215,7 +216,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("notifyRecipient")]
         public virtual async Task<IActionResult> NotifyRecipient(GiftCardModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return AccessDeniedView();
 
             //try to get a gift card with the specified id
@@ -273,7 +274,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return AccessDeniedView();
 
             //try to get a gift card with the specified id
@@ -295,7 +296,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> UsageHistoryList(GiftCardUsageHistorySearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageGiftCards))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageGiftCards))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a gift card with the specified id

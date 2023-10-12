@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Services.Security;
 using Nop.Web.Areas.Admin.Factories;
 using Nop.Web.Framework.Components;
@@ -43,10 +44,10 @@ namespace Nop.Web.Areas.Admin.Components
         /// </returns>
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) ||
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageOrders) ||
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests) ||
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) ||
+                !await _permissionService.AuthorizeAsync(StandardPermission.ManageOrders) ||
+                !await _permissionService.AuthorizeAsync(StandardPermission.ManageReturnRequests) ||
+                !await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
             {
                 return Content(string.Empty);
             }

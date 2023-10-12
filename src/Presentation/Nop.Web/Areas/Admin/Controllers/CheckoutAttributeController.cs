@@ -2,6 +2,7 @@
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Security;
 using Nop.Services.Attributes;
 using Nop.Services.Directory;
 using Nop.Services.Localization;
@@ -200,7 +201,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //prepare model
@@ -212,7 +213,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(CheckoutAttributeSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -223,7 +224,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //prepare model
@@ -235,7 +236,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(CheckoutAttributeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -270,7 +271,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a checkout attribute with the specified id
@@ -287,7 +288,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(CheckoutAttributeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a checkout attribute with the specified id
@@ -329,7 +330,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a checkout attribute with the specified id
@@ -351,7 +352,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -377,7 +378,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ValueList(CheckoutAttributeValueSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a checkout attribute with the specified id
@@ -392,7 +393,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ValueCreatePopup(int checkoutAttributeId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a checkout attribute with the specified id
@@ -410,7 +411,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ValueCreatePopup(CheckoutAttributeValueModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a checkout attribute with the specified id
@@ -459,7 +460,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ValueEditPopup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a checkout attribute value with the specified id
@@ -481,7 +482,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ValueEditPopup(CheckoutAttributeValueModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a checkout attribute value with the specified id
@@ -536,7 +537,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ValueDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a checkout attribute value with the specified id

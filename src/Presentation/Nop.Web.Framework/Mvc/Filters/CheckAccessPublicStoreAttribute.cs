@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Services.Security;
 
@@ -84,7 +85,7 @@ namespace Nop.Web.Framework.Mvc.Filters
                     return;
 
                 //check whether current customer has access to a public store
-                if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.PublicStoreAllowNavigation))
+                if (await _permissionService.AuthorizeAsync(StandardPermission.PublicStoreAllowNavigation))
                     return;
 
                 //customer hasn't access to a public store

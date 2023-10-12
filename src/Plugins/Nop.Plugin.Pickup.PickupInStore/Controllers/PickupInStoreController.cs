@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Directory;
+using Nop.Core.Security;
 using Nop.Plugin.Pickup.PickupInStore.Domain;
 using Nop.Plugin.Pickup.PickupInStore.Factories;
 using Nop.Plugin.Pickup.PickupInStore.Models;
@@ -66,7 +67,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
 
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -78,7 +79,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
         [HttpPost]
         public async Task<IActionResult> List(StorePickupPointSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -89,7 +90,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
 
         public async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var model = new StorePickupPointModel
@@ -122,7 +123,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(StorePickupPointModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var address = new Address
@@ -159,7 +160,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var pickupPoint = await _storePickupPointService.GetStorePickupPointByIdAsync(id);
@@ -219,7 +220,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(StorePickupPointModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -261,7 +262,7 @@ namespace Nop.Plugin.Pickup.PickupInStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var pickupPoint = await _storePickupPointService.GetStorePickupPointByIdAsync(id);

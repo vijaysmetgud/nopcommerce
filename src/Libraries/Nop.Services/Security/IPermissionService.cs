@@ -9,6 +9,16 @@ namespace Nop.Services.Security
     public partial interface IPermissionService
     {
         /// <summary>
+        /// Gets a permission
+        /// </summary>
+        /// <param name="systemName">Permission system name</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation
+        /// The task result contains the permission
+        /// </returns>
+        Task<PermissionRecord> GetPermissionRecordBySystemNameAsync(string systemName);
+        
+        /// <summary>
         /// Gets all permissions
         /// </summary>
         /// <returns>
@@ -27,7 +37,7 @@ namespace Nop.Services.Security
         /// <summary>
         /// Gets a permission record by identifier
         /// </summary>
-        /// <param name="permission">Permission</param>
+        /// <param name="permissionId">Permission identifier</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains a permission record
@@ -47,21 +57,7 @@ namespace Nop.Services.Security
         /// <param name="permission">Permission</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         Task DeletePermissionRecordAsync(PermissionRecord permission);
-
-        /// <summary>
-        /// Install permissions
-        /// </summary>
-        /// <param name="permissionProvider">Permission provider</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        Task InstallPermissionsAsync(IPermissionProvider permissionProvider);
-
-        /// <summary>
-        /// Install permissions
-        /// </summary>
-        /// <param name="permissionProvider">Permission provider</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        Task UninstallPermissionsAsync(IPermissionProvider permissionProvider);
-
+        
         /// <summary>
         /// Authorize permission
         /// </summary>
@@ -121,7 +117,7 @@ namespace Nop.Services.Security
         /// <param name="permissionId">Permission identifier</param>
         /// <returns>A task that represents the asynchronous operation</returns>
         Task<IList<PermissionRecordCustomerRoleMapping>> GetMappingByPermissionRecordIdAsync(int permissionId);
-
+        
         /// <summary>
         /// Delete a permission record-customer role mapping
         /// </summary>

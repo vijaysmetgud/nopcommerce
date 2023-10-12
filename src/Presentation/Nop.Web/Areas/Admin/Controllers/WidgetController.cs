@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Cms;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Cms;
 using Nop.Services.Configuration;
 using Nop.Services.Plugins;
@@ -52,7 +53,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             //prepare model
@@ -64,7 +65,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(WidgetSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -76,7 +77,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> WidgetUpdate(WidgetModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             var widget = await _widgetPluginManager.LoadPluginBySystemNameAsync(model.SystemName);

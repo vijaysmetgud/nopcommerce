@@ -2,6 +2,7 @@
 using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Infrastructure;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Services.Common;
 using Nop.Services.Customers;
@@ -90,7 +91,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> SystemInfo()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             //prepare model
@@ -101,7 +102,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Warnings()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             //prepare model
@@ -112,7 +113,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Maintenance()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             //prepare model
@@ -125,7 +126,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("delete-guests")]
         public virtual async Task<IActionResult> MaintenanceDeleteGuests(MaintenanceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             var startDateValue = model.DeleteGuests.StartDate == null ? null
@@ -143,7 +144,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("delete-abondoned-carts")]
         public virtual async Task<IActionResult> MaintenanceDeleteAbandonedCarts(MaintenanceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             var olderThanDateValue = _dateTimeHelper.ConvertToUtcTime(model.DeleteAbandonedCarts.OlderThan, await _dateTimeHelper.GetCurrentTimeZoneAsync());
@@ -156,7 +157,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("delete-exported-files")]
         public virtual async Task<IActionResult> MaintenanceDeleteFiles(MaintenanceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             var startDateValue = model.DeleteExportedFiles.StartDate == null ? null
@@ -197,7 +198,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("delete-minification-files")]
         public virtual async Task<IActionResult> MaintenanceDeleteMinificationFiles(MaintenanceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             model.DeleteMinificationFiles.NumberOfDeletedFiles = 0;
@@ -227,7 +228,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> BackupFiles(BackupFileSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -240,7 +241,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("backup-database")]
         public virtual async Task<IActionResult> BackupDatabase(MaintenanceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             try
@@ -263,7 +264,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("re-index")]
         public virtual async Task<IActionResult> ReIndexTables(MaintenanceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             try
@@ -283,7 +284,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("backupFileName", "action")]
         public virtual async Task<IActionResult> BackupAction(MaintenanceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             var action = Request.Form["action"];
@@ -326,7 +327,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("delete-already-sent-queued-emails")]
         public virtual async Task<IActionResult> MaintenanceDeleteAlreadySentQueuedEmails(MaintenanceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             var startDateValue = model.DeleteAlreadySentQueuedEmails.StartDate == null ? null
@@ -360,7 +361,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ClearCache(string returnUrl = "")
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             await _staticCacheManager.ClearAsync();
@@ -379,7 +380,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> RestartApplication(string returnUrl = "")
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             //home page
@@ -395,9 +396,9 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> RestartApplication()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance) &&
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins) &&
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance) &&
+                !await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins) &&
+                !await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
             {
                 return AccessDeniedView();
             }
@@ -410,7 +411,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> SeNames()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             //prepare model
@@ -422,7 +423,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SeNames(UrlRecordSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -434,7 +435,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelectedSeNames(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -448,7 +449,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PopularSearchTermsReport(PopularSearchTermSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model

@@ -70,7 +70,7 @@ namespace Nop.Data.Migrations.UpgradeTo450
                     {
                         Name = "Admin area. Access sales summary report",
                         SystemName = "SalesSummaryReport",
-                        Category = "Orders"
+                        CategoryType = PermissionCategoryType.Orders
                     }
                 );
 
@@ -106,7 +106,7 @@ namespace Nop.Data.Migrations.UpgradeTo450
                     {
                         Name = "Admin area. Manage App Settings",
                         SystemName = "ManageAppSettings",
-                        Category = "Configuration"
+                        CategoryType = PermissionCategoryType.Configuration
                     }
                 );
 

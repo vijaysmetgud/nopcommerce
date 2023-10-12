@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Security;
 using Nop.Services.Customers;
 using Nop.Services.Security;
 using Nop.Web.Factories;
@@ -45,7 +46,7 @@ namespace Nop.Web.Controllers
             }
 
             //display "edit" (manage) link
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers))
+            if (await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers))
                 DisplayEditLink(Url.Action("Edit", "Customer", new { id = customer.Id, area = AreaNames.Admin }));
 
             var model = await _profileModelFactory.PrepareProfileIndexModelAsync(customer, pageNumber);

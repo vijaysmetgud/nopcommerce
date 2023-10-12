@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Customers;
 using Nop.Services.Localization;
@@ -62,7 +63,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers))
                 return AccessDeniedView();
 
             //prepare model
@@ -74,7 +75,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(CustomerRoleSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -85,7 +86,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return AccessDeniedView();
 
             //prepare model
@@ -97,7 +98,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(CustomerRoleModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -123,7 +124,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return AccessDeniedView();
 
             //try to get a customer role with the specified id
@@ -140,7 +141,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(CustomerRoleModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return AccessDeniedView();
 
             //try to get a customer role with the specified id
@@ -190,7 +191,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return AccessDeniedView();
 
             //try to get a customer role with the specified id
@@ -219,7 +220,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> AssociateProductToCustomerRolePopup()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return AccessDeniedView();
 
             //prepare model
@@ -231,7 +232,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AssociateProductToCustomerRolePopupList(CustomerRoleProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -244,7 +245,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> AssociateProductToCustomerRolePopup([Bind(Prefix = nameof(AddProductToCustomerRoleModel))] AddProductToCustomerRoleModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAcl))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers) || !await _permissionService.AuthorizeAsync(StandardPermission.ManageAcl))
                 return AccessDeniedView();
 
             //try to get a product with the specified id

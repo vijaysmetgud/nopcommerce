@@ -10,6 +10,7 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Infrastructure;
+using Nop.Core.Security;
 using Nop.Services.Attributes;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
@@ -827,7 +828,7 @@ namespace Nop.Web.Controllers
             var price = string.Empty;
             //base price
             var basepricepangv = string.Empty;
-            if (!product.CustomerEntersPrice && await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices))
+            if (!product.CustomerEntersPrice && await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices))
             {
                 var currentStore = await _storeContext.GetCurrentStoreAsync();
                 var currentCustomer = await _workContext.GetCurrentCustomerAsync();
@@ -1152,7 +1153,7 @@ namespace Nop.Web.Controllers
 
         public virtual async Task<IActionResult> Cart()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart))
                 return RedirectToRoute("Homepage");
 
             var store = await _storeContext.GetCurrentStoreAsync();
@@ -1166,7 +1167,7 @@ namespace Nop.Web.Controllers
         [FormValueRequired("updatecart")]
         public virtual async Task<IActionResult> UpdateCart(IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart))
                 return RedirectToRoute("Homepage");
 
             var customer = await _workContext.GetCurrentCustomerAsync();
@@ -1488,7 +1489,7 @@ namespace Nop.Web.Controllers
 
         public virtual async Task<IActionResult> Wishlist(Guid? customerGuid)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist))
                 return RedirectToRoute("Homepage");
 
             var customer = customerGuid.HasValue ?
@@ -1509,7 +1510,7 @@ namespace Nop.Web.Controllers
         [FormValueRequired("updatecart")]
         public virtual async Task<IActionResult> UpdateWishlist(IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist))
                 return RedirectToRoute("Homepage");
 
             var customer = await _workContext.GetCurrentCustomerAsync();
@@ -1573,10 +1574,10 @@ namespace Nop.Web.Controllers
         [FormValueRequired("addtocartbutton")]
         public virtual async Task<IActionResult> AddItemsToCartFromWishlist(Guid? customerGuid, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart))
                 return RedirectToRoute("Homepage");
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist))
                 return RedirectToRoute("Homepage");
 
             var customer = await _workContext.GetCurrentCustomerAsync();
@@ -1650,7 +1651,7 @@ namespace Nop.Web.Controllers
 
         public virtual async Task<IActionResult> EmailWishlist()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist) || !_shoppingCartSettings.EmailWishlistEnabled)
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist) || !_shoppingCartSettings.EmailWishlistEnabled)
                 return RedirectToRoute("Homepage");
 
             var store = await _storeContext.GetCurrentStoreAsync();
@@ -1669,7 +1670,7 @@ namespace Nop.Web.Controllers
         [ValidateCaptcha]
         public virtual async Task<IActionResult> EmailWishlistSend(WishlistEmailAFriendModel model, bool captchaValid)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist) || !_shoppingCartSettings.EmailWishlistEnabled)
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist) || !_shoppingCartSettings.EmailWishlistEnabled)
                 return RedirectToRoute("Homepage");
 
             var customer = await _workContext.GetCurrentCustomerAsync();

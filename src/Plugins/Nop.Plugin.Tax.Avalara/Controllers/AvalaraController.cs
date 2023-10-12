@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Directory;
+using Nop.Core.Security;
 using Nop.Plugin.Tax.Avalara.Domain;
 using Nop.Plugin.Tax.Avalara.Models.Configuration;
 using Nop.Plugin.Tax.Avalara.Services;
@@ -78,7 +79,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
 
         public async Task<IActionResult> Configure(string testTaxResult = null)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             var customer = await _workContext.GetCurrentCustomerAsync();
@@ -163,7 +164,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
         [FormValueRequired("save")]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -195,7 +196,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
         [FormValueRequired("check-credentials")]
         public async Task<IActionResult> CheckCredentials()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //verify credentials
@@ -236,7 +237,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
         [FormValueRequired("request-certificate-setup")]
         public async Task<IActionResult> RequestCertificateSetup()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //request the certificate setup and display current status
@@ -264,7 +265,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
         [FormValueRequired("test-tax")]
         public async Task<IActionResult> TestTaxRequest(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)

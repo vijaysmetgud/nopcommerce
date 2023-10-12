@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core.Domain.Discounts;
+using Nop.Core.Security;
 using Nop.Plugin.DiscountRules.CustomerRoles.Models;
 using Nop.Services.Configuration;
 using Nop.Services.Customers;
@@ -64,7 +65,7 @@ namespace Nop.Plugin.DiscountRules.CustomerRoles.Controllers
 
         public async Task<IActionResult> Configure(int discountId, int? discountRequirementId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return Content("Access denied");
 
             //load the discount
@@ -108,7 +109,7 @@ namespace Nop.Plugin.DiscountRules.CustomerRoles.Controllers
         [HttpPost]
         public async Task<IActionResult> Configure(RequirementModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageDiscounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageDiscounts))
                 return Content("Access denied");
 
             if (ModelState.IsValid)

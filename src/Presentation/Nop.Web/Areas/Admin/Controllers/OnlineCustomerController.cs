@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Security;
 using Nop.Web.Areas.Admin.Factories;
 using Nop.Web.Areas.Admin.Models.Customers;
@@ -29,7 +30,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers))
                 return AccessDeniedView();
 
             //prepare model
@@ -41,7 +42,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(OnlineCustomerSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCustomers))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model

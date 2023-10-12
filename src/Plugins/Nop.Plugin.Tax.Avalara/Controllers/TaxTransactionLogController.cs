@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Plugin.Tax.Avalara.Models.Log;
 using Nop.Plugin.Tax.Avalara.Services;
 using Nop.Services.Customers;
@@ -52,7 +53,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
         [HttpPost]
         public async Task<IActionResult> LogList(TaxTransactionLogSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare filter parameters
@@ -86,7 +87,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -99,7 +100,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
 
         public async Task<IActionResult> View(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //try to get log item with the passed identifier
@@ -125,7 +126,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //try to get log item with the passed identifier
@@ -141,7 +142,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
 
         public async Task<IActionResult> ClearAll()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             await _taxTransactionLogService.ClearLogAsync();

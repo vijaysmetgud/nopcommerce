@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Nop.Core.Security;
 using Nop.Plugin.Shipping.UPS.Domain;
 using Nop.Plugin.Shipping.UPS.Models;
 using Nop.Plugin.Shipping.UPS.Services;
@@ -58,7 +59,7 @@ namespace Nop.Plugin.Shipping.UPS.Controllers
         public async Task<IActionResult> Configure()
         {
             //whether user has the authority to manage configuration
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare common model
@@ -121,7 +122,7 @@ namespace Nop.Plugin.Shipping.UPS.Controllers
         public async Task<IActionResult> Configure(UPSShippingModel model)
         {
             //whether user has the authority to manage configuration
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)

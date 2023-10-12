@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Plugin.Tax.Avalara.Services;
 using Nop.Services.Localization;
 using Nop.Services.Messages;
@@ -46,7 +47,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return RedirectToAction("List", "Product");
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //export items

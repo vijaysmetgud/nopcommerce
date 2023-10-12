@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.News;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
@@ -100,7 +101,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> NewsItems(int? filterByNewsItemId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             //prepare model
@@ -112,7 +113,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(NewsItemSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -123,7 +124,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> NewsItemCreate()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             //prepare model
@@ -135,7 +136,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> NewsItemCreate(NewsItemModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -172,7 +173,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> NewsItemEdit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             //try to get a news item with the specified id
@@ -189,7 +190,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> NewsItemEdit(NewsItemModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             //try to get a news item with the specified id
@@ -231,7 +232,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             //try to get a news item with the specified id
@@ -256,7 +257,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> NewsComments(int? filterByNewsItemId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             //try to get a news item with the specified id
@@ -273,7 +274,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Comments(NewsCommentSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -285,7 +286,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CommentUpdate(NewsCommentModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             //try to get a news comment with the specified id
@@ -313,7 +314,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CommentDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             //try to get a news comment with the specified id
@@ -332,7 +333,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelectedComments(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -355,7 +356,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ApproveSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -384,7 +385,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DisapproveSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNews))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)

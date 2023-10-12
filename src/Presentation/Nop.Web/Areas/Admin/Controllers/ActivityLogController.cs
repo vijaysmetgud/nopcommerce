@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
@@ -42,7 +43,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ActivityTypes()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageActivityLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageActivityLog))
                 return AccessDeniedView();
 
             //prepare model
@@ -54,7 +55,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ActionName("SaveTypes")]
         public virtual async Task<IActionResult> SaveTypes(IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageActivityLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageActivityLog))
                 return AccessDeniedView();
 
             //activity log
@@ -81,7 +82,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ActivityLogs()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageActivityLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageActivityLog))
                 return AccessDeniedView();
 
             //prepare model
@@ -93,7 +94,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ListLogs(ActivityLogSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageActivityLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageActivityLog))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -105,7 +106,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ActivityLogDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageActivityLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageActivityLog))
                 return AccessDeniedView();
 
             //try to get a log item with the specified id
@@ -124,7 +125,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ClearAll()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageActivityLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageActivityLog))
                 return AccessDeniedView();
 
             await _customerActivityService.ClearAllActivitiesAsync();

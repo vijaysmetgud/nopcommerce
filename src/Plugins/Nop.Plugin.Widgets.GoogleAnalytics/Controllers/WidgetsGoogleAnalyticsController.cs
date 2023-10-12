@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Plugin.Widgets.GoogleAnalytics.Models;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
@@ -48,7 +49,7 @@ namespace Nop.Plugin.Widgets.GoogleAnalytics.Controllers
 
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             //load settings for a chosen store scope
@@ -84,7 +85,7 @@ namespace Nop.Plugin.Widgets.GoogleAnalytics.Controllers
         [HttpPost]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             //load settings for a chosen store scope

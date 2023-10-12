@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
@@ -94,7 +95,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             var model = await _specificationAttributeModelFactory.PrepareSpecificationAttributeGroupSearchModelAsync(new SpecificationAttributeGroupSearchModel());
@@ -105,7 +106,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SpecificationAttributeGroupList(SpecificationAttributeGroupSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return await AccessDeniedDataTablesJson();
 
             var model = await _specificationAttributeModelFactory.PrepareSpecificationAttributeGroupListModelAsync(searchModel);
@@ -116,7 +117,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SpecificationAttributeList(SpecificationAttributeSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return await AccessDeniedDataTablesJson();
 
             SpecificationAttributeGroup group = null;
@@ -134,7 +135,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateSpecificationAttributeGroup()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             var model = await _specificationAttributeModelFactory.PrepareSpecificationAttributeGroupModelAsync(new SpecificationAttributeGroupModel(), null);
@@ -145,7 +146,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateSpecificationAttributeGroup(SpecificationAttributeGroupModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -173,7 +174,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateSpecificationAttribute()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             var model = await _specificationAttributeModelFactory.PrepareSpecificationAttributeModelAsync(new SpecificationAttributeModel(), null);
@@ -184,7 +185,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateSpecificationAttribute(SpecificationAttributeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -212,7 +213,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditSpecificationAttributeGroup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             var specificationAttributeGroup = await _specificationAttributeService.GetSpecificationAttributeGroupByIdAsync(id);
@@ -227,7 +228,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditSpecificationAttributeGroup(SpecificationAttributeGroupModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             var specificationAttributeGroup = await _specificationAttributeService.GetSpecificationAttributeGroupByIdAsync(model.Id);
@@ -259,7 +260,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditSpecificationAttribute(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a specification attribute with the specified id
@@ -276,7 +277,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditSpecificationAttribute(SpecificationAttributeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a specification attribute with the specified id
@@ -313,7 +314,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSpecificationAttributeGroup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             var specificationAttributeGroup = await _specificationAttributeService.GetSpecificationAttributeGroupByIdAsync(id);
@@ -333,7 +334,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSpecificationAttribute(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             var specificationAttribute = await _specificationAttributeService.GetSpecificationAttributeByIdAsync(id);
@@ -354,7 +355,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelectedSpecificationAttributes(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -379,7 +380,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> OptionList(SpecificationAttributeOptionSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a specification attribute with the specified id
@@ -394,7 +395,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> OptionCreatePopup(int specificationAttributeId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a specification attribute with the specified id
@@ -412,7 +413,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> OptionCreatePopup(SpecificationAttributeOptionModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a specification attribute with the specified id
@@ -446,7 +447,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> OptionEditPopup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a specification attribute option with the specified id
@@ -470,7 +471,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> OptionEditPopup(SpecificationAttributeOptionModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a specification attribute option with the specified id
@@ -512,7 +513,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> OptionDelete(int id, int specificationAttributeId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return AccessDeniedView();
 
             //try to get a specification attribute option with the specified id
@@ -549,7 +550,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> UsedByProducts(SpecificationAttributeProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAttributes))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAttributes))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a specification attribute with the specified id

@@ -3,6 +3,7 @@ using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Tax;
+using Nop.Core.Security;
 using Nop.Plugin.Misc.Zettle.Domain;
 using Nop.Plugin.Misc.Zettle.Models;
 using Nop.Plugin.Misc.Zettle.Services;
@@ -92,7 +93,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
 
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             var model = new ConfigurationModel
@@ -224,7 +225,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
         [FormValueRequired("credentials")]
         public async Task<IActionResult> SaveCredentials(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -263,7 +264,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
         [FormValueRequired("sync")]
         public async Task<IActionResult> SaveSync(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -299,7 +300,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
         [FormValueRequired("revoke")]
         public async Task<IActionResult> RevokeAccess()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             if (!ZettleService.IsConfigured(_zettleSettings))
@@ -339,7 +340,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
         [HttpPost]
         public async Task<IActionResult> SyncRecordList(SyncRecordSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return await AccessDeniedDataTablesJson();
 
             var records = await _zettleRecordService.GetAllRecordsAsync(productOnly: true,
@@ -368,7 +369,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
         [HttpPost]
         public async Task<IActionResult> SyncRecordUpdate(SyncRecordModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return await AccessDeniedDataTablesJson();
 
             var productRecord = await _zettleRecordService.GetRecordByIdAsync(model.Id)
@@ -391,7 +392,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
         [HttpPost]
         public async Task<IActionResult> SyncRecordDelete(List<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return await AccessDeniedDataTablesJson();
 
             if (!selectedIds?.Any() ?? true)
@@ -412,10 +413,10 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
 
         public async Task<IActionResult> ProductToSync()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var model = new AddProductToSyncSearchModel();
@@ -432,10 +433,10 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
         [HttpPost]
         public async Task<IActionResult> ProductListToSync(AddProductToSyncSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return await AccessDeniedDataTablesJson();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             var products = await _productService.SearchProductsAsync(showHidden: true,
@@ -466,10 +467,10 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
         [FormValueRequired("save")]
         public async Task<IActionResult> ProductToSync(AddProductToSyncModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var invalidProducts = await _zettleRecordService.AddRecordsAsync(model.SelectedProductIds?.ToList());
@@ -488,7 +489,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
 
         public async Task<IActionResult> SyncStart()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return await AccessDeniedDataTablesJson();
 
             await _zettleService.ImportAsync();
@@ -498,7 +499,7 @@ namespace Nop.Plugin.Misc.Zettle.Controllers
 
         public async Task<IActionResult> SyncUpdate()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return await AccessDeniedDataTablesJson();
 
             if (string.IsNullOrEmpty(_zettleSettings.ImportId))

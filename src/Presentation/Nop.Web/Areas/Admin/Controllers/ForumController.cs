@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Forums;
+using Nop.Core.Security;
 using Nop.Services.Forums;
 using Nop.Services.Localization;
 using Nop.Services.Messages;
@@ -51,7 +52,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //prepare model
@@ -63,7 +64,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ForumGroupList(ForumGroupSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -75,7 +76,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ForumList(ForumSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a forum group with the specified id
@@ -94,7 +95,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateForumGroup()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //prepare model
@@ -106,7 +107,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateForumGroup(ForumGroupModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -130,7 +131,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateForum()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //prepare model
@@ -142,7 +143,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateForum(ForumModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -170,7 +171,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditForumGroup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //try to get a forum group with the specified id
@@ -187,7 +188,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditForumGroup(ForumGroupModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //try to get a forum group with the specified id
@@ -215,7 +216,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditForum(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //try to get a forum with the specified id
@@ -232,7 +233,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditForum(ForumModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //try to get a forum with the specified id
@@ -265,7 +266,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteForumGroup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //try to get a forum group with the specified id
@@ -283,7 +284,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteForum(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageForums))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageForums))
                 return AccessDeniedView();
 
             //try to get a forum with the specified id

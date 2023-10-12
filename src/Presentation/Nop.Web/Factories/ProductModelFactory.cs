@@ -12,6 +12,7 @@ using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Domain.Vendors;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
 using Nop.Services.Customers;
@@ -321,13 +322,13 @@ namespace Nop.Web.Factories
         {
             //add to cart button
             priceModel.DisableBuyButton = product.DisableBuyButton ||
-                                          !await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart) ||
-                                          !await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices);
+                                          !await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart) ||
+                                          !await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices);
 
             //add to wishlist button
             priceModel.DisableWishlistButton = product.DisableWishlistButton ||
-                                               !await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist) ||
-                                               !await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices);
+                                               !await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist) ||
+                                               !await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices);
             //compare products
             priceModel.DisableAddToCompareListButton = !_catalogSettings.CompareProductsEnabled;
 
@@ -344,7 +345,7 @@ namespace Nop.Web.Factories
             }
 
             //prices
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices))
+            if (await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices))
             {
                 if (product.CustomerEntersPrice)
                     return;
@@ -540,13 +541,13 @@ namespace Nop.Web.Factories
 
             //add to cart button (ignore "DisableBuyButton" property for grouped products)
             priceModel.DisableBuyButton =
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart) ||
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices);
+                !await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart) ||
+                !await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices);
 
             //add to wishlist button (ignore "DisableWishlistButton" property for grouped products)
             priceModel.DisableWishlistButton =
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist) ||
-                !await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices);
+                !await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist) ||
+                !await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices);
 
             //compare products
             priceModel.DisableAddToCompareListButton = !_catalogSettings.CompareProductsEnabled;
@@ -554,7 +555,7 @@ namespace Nop.Web.Factories
                 return;
 
             //we have at least one associated product
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices))
+            if (await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices))
             {
                 //find a minimum possible price
                 decimal? minPossiblePrice = null;
@@ -775,7 +776,7 @@ namespace Nop.Web.Factories
                 ProductId = product.Id
             };
 
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices))
+            if (await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices))
             {
                 model.HidePrices = false;
                 if (product.CustomerEntersPrice)
@@ -901,9 +902,9 @@ namespace Nop.Web.Factories
             }
 
             //'add to cart', 'add to wishlist' buttons
-            model.DisableBuyButton = product.DisableBuyButton || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart);
-            model.DisableWishlistButton = product.DisableWishlistButton || !await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist);
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices))
+            model.DisableBuyButton = product.DisableBuyButton || !await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart);
+            model.DisableWishlistButton = product.DisableWishlistButton || !await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist);
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices))
             {
                 model.DisableBuyButton = true;
                 model.DisableWishlistButton = true;
@@ -1003,7 +1004,7 @@ namespace Nop.Web.Factories
                         attributeModel.Values.Add(valueModel);
 
                         //display price if allowed
-                        if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices))
+                        if (await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices))
                         {
                             var currentCustomer = await _workContext.GetCurrentCustomerAsync();
                             var customer = updatecartitem?.CustomerId is null ? currentCustomer : await _customerService.GetCustomerByIdAsync(updatecartitem.CustomerId);
@@ -1672,7 +1673,7 @@ namespace Nop.Web.Factories
             model.ProductReviews = await PrepareProductReviewsModelAsync(product);
 
             //tier prices
-            if (product.HasTierPrices && await _permissionService.AuthorizeAsync(StandardPermissionProvider.DisplayPrices))
+            if (product.HasTierPrices && await _permissionService.AuthorizeAsync(StandardPermission.DisplayPrices))
             {
                 model.TierPrices = await PrepareProductTierPriceModelsAsync(product);
             }

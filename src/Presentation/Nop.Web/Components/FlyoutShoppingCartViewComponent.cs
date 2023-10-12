@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Security;
 using Nop.Services.Security;
 using Nop.Web.Factories;
 using Nop.Web.Framework.Components;
@@ -26,7 +27,7 @@ namespace Nop.Web.Components
             if (!_shoppingCartSettings.MiniShoppingCartEnabled)
                 return Content("");
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart))
                 return Content("");
 
             var model = await _shoppingCartModelFactory.PrepareMiniShoppingCartModelAsync();

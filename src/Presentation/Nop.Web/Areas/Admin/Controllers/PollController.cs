@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Polls;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Messages;
 using Nop.Services.Polls;
@@ -86,7 +87,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             //prepare model
@@ -98,7 +99,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(PollSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -109,7 +110,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             //prepare model
@@ -121,7 +122,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(PollModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -149,7 +150,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             //try to get a poll with the specified id
@@ -166,7 +167,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(PollModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             //try to get a poll with the specified id
@@ -200,7 +201,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             //try to get a poll with the specified id
@@ -222,7 +223,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PollAnswers(PollAnswerSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a poll with the specified id
@@ -239,7 +240,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PollAnswerUpdate([Validate] PollAnswerModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -260,7 +261,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PollAnswerAdd(int pollId, [Validate] PollAnswerModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -275,7 +276,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PollAnswerDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePolls))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePolls))
                 return AccessDeniedView();
 
             //try to get a poll answer with the specified id

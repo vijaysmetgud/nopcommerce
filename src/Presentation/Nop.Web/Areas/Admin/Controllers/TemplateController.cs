@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Topics;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Services.Security;
@@ -52,7 +53,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             //prepare model
@@ -66,7 +67,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CategoryTemplates(CategoryTemplateSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -78,7 +79,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CategoryTemplateUpdate(CategoryTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -97,7 +98,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CategoryTemplateAdd(CategoryTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -113,7 +114,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CategoryTemplateDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if ((await _categoryTemplateService.GetAllCategoryTemplatesAsync()).Count == 1)
@@ -135,7 +136,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ManufacturerTemplates(ManufacturerTemplateSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -147,7 +148,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ManufacturerTemplateUpdate(ManufacturerTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -166,7 +167,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ManufacturerTemplateAdd(ManufacturerTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -182,7 +183,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ManufacturerTemplateDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if ((await _manufacturerTemplateService.GetAllManufacturerTemplatesAsync()).Count == 1)
@@ -204,7 +205,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductTemplates(ProductTemplateSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -216,7 +217,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductTemplateUpdate(ProductTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -235,7 +236,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductTemplateAdd(ProductTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -251,7 +252,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductTemplateDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if ((await _productTemplateService.GetAllProductTemplatesAsync()).Count == 1)
@@ -273,7 +274,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> TopicTemplates(TopicTemplateSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -285,7 +286,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> TopicTemplateUpdate(TopicTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -304,7 +305,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> TopicTemplateAdd(TopicTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -320,7 +321,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> TopicTemplateDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
                 return AccessDeniedView();
 
             if ((await _topicTemplateService.GetAllTopicTemplatesAsync()).Count == 1)

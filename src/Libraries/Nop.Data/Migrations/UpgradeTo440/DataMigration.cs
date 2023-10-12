@@ -31,7 +31,7 @@ namespace Nop.Data.Migrations.UpgradeTo440
                     {
                         Name = "Public store. Access MiniProfiler results",
                         SystemName = "AccessProfiling",
-                        Category = "PublicStore"
+                        CategoryType = PermissionCategoryType.PublicStore
                     }
                 );
 
@@ -88,7 +88,7 @@ namespace Nop.Data.Migrations.UpgradeTo440
                     {
                         Name = "Admin area. Manage Multi-factor Authentication Methods",
                         SystemName = "ManageMultifactorAuthenticationMethods",
-                        Category = "Configuration"
+                        CategoryType = PermissionCategoryType.Configuration
                     }
                 );
 

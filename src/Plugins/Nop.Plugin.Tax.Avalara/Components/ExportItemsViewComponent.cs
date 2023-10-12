@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Security;
 using Nop.Services.Tax;
 using Nop.Web.Framework.Components;
@@ -46,7 +47,7 @@ namespace Nop.Plugin.Tax.Avalara.Components
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return Content(string.Empty);
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return Content(string.Empty);
 
             //ensure that it's a proper widget zone

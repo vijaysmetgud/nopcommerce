@@ -8,6 +8,7 @@
 @inject Nop.Services.Localization.ILanguageService languageService
 @using Nop.Core.Domain
 @using Nop.Core.Domain.Localization
+@using Nop.Core.Security
 @using Nop.Services.Customers
 @using Nop.Services.Helpers
 @using Nop.Services.Security
@@ -21,7 +22,7 @@
     adminPageTitle += T("Admin.PageTitle").Text;
 
     //has "Manage Maintenance" permission?
-    var canManageMaintenance = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance);
+    var canManageMaintenance = await permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance);
 
     //avatar
     var currentCustomer = await workContext.GetCurrentCustomerAsync();

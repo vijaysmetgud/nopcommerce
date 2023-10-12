@@ -2,6 +2,7 @@
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Topics;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Customers;
 using Nop.Services.Localization;
@@ -173,7 +174,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTopics))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTopics))
                 return AccessDeniedView();
 
             //prepare model
@@ -196,7 +197,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(TopicSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTopics))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTopics))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -211,7 +212,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTopics))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTopics))
                 return AccessDeniedView();
 
             //prepare model
@@ -223,7 +224,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(TopicModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTopics))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTopics))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -268,7 +269,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id, bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTopics))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTopics))
                 return AccessDeniedView();
 
             //try to get a topic with the specified id
@@ -296,7 +297,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(TopicModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTopics))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTopics))
                 return AccessDeniedView();
 
             //try to get a topic with the specified id
@@ -347,7 +348,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTopics))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTopics))
                 return AccessDeniedView();
 
             //try to get a topic with the specified id

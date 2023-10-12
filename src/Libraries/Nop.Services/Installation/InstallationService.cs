@@ -71,6 +71,7 @@ namespace Nop.Services.Installation
         protected readonly IRepository<ManufacturerTemplate> _manufacturerTemplateRepository;
         protected readonly IRepository<MeasureDimension> _measureDimensionRepository;
         protected readonly IRepository<MeasureWeight> _measureWeightRepository;
+        protected readonly IRepository<PermissionRecord> _permissionRecordRepository;
         protected readonly IRepository<Product> _productRepository;
         protected readonly IRepository<ProductAttribute> _productAttributeRepository;
         protected readonly IRepository<ProductAvailabilityRange> _productAvailabilityRangeRepository;
@@ -106,6 +107,7 @@ namespace Nop.Services.Installation
             IRepository<ManufacturerTemplate> manufacturerTemplateRepository,
             IRepository<MeasureDimension> measureDimensionRepository,
             IRepository<MeasureWeight> measureWeightRepository,
+            IRepository<PermissionRecord> permissionRecordRepository,
             IRepository<Product> productRepository,
             IRepository<ProductAttribute> productAttributeRepository,
             IRepository<ProductAvailabilityRange> productAvailabilityRangeRepository,
@@ -137,6 +139,7 @@ namespace Nop.Services.Installation
             _manufacturerTemplateRepository = manufacturerTemplateRepository;
             _measureDimensionRepository = measureDimensionRepository;
             _measureWeightRepository = measureWeightRepository;
+            _permissionRecordRepository = permissionRecordRepository;
             _productAttributeRepository = productAttributeRepository;
             _productAvailabilityRangeRepository = productAvailabilityRangeRepository;
             _productRepository = productRepository;
@@ -9551,6 +9554,67 @@ namespace Nop.Services.Installation
             await InsertInstallationDataAsync(new ProductProductTagMapping { ProductTagId = productTag.Id, ProductId = product.Id });
         }
 
+        /// <summary>
+        /// Install permissions
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        protected virtual async Task InstallPermissionsAsync()
+        {
+            var roles = await _customerRoleRepository.Table.OrderBy(cr => cr.Id).ToListAsync();
+
+            CustomerRole getCustomerRole(string systemName)
+            {
+                if (string.IsNullOrWhiteSpace(systemName))
+                    return null;
+                
+                var customerRole = roles.FirstOrDefault(cr => cr.SystemName == systemName);
+
+                return customerRole;
+            }
+
+            var defaultPermissions = await StandardPermission
+                .GetDefaultPermissions()
+                .Select(dp => (CustomerRoleId: getCustomerRole(dp.systemRoleName)?.Id ?? 0, Permissions: dp.permissions)).Where(dp => dp.CustomerRoleId != 0).ToListAsync();
+
+            var allPermission = new Dictionary<PermissionRecord, List<PermissionRecordCustomerRoleMapping>>();
+            
+            foreach (var permission in StandardPermission.GetPermissions().DistinctBy(p=>p.SystemName))
+                allPermission.Add(permission, defaultPermissions
+                    .Where(dp => dp.Permissions.Any(p => p.SystemName.Equals(permission.SystemName, StringComparison.InvariantCultureIgnoreCase)))
+                    .Select(defaultPermission => new PermissionRecordCustomerRoleMapping { CustomerRoleId = defaultPermission.CustomerRoleId, PermissionRecordId = permission.Id })
+                    .ToList());
+
+            if (allPermission.Any())
+            {
+                //save new permission
+                await InsertInstallationDataAsync(allPermission.Keys.ToList());
+                var dbPermission = await _permissionRecordRepository.Table.ToDictionaryAsync(p => p.SystemName, p => p);
+                await InsertInstallationDataAsync(allPermission.Keys.Where(key=>dbPermission.ContainsKey(key.SystemName)).SelectMany(
+                    key =>
+                    {
+                        var permissionRecord = dbPermission[key.SystemName];
+
+                        allPermission[key].ForEach(item => item.PermissionRecordId = permissionRecord.Id);
+
+                        return allPermission[key];
+                    }
+                ).ToList());
+
+                var langs = await _languageRepository.Table.ToListAsync();
+                
+                await InsertInstallationDataAsync(allPermission.Keys.SelectMany(permissionRecord =>
+                {
+                    var resourceName = $"{NopLocalizationDefaults.PermissionLocaleStringResourcesPrefix}{permissionRecord.SystemName}";
+                    var resourceValue = permissionRecord.Name;
+
+                    return langs.Select(lang => new LocaleStringResource
+                    {
+                        LanguageId = lang.Id, ResourceName = resourceName, ResourceValue = resourceValue
+                    });
+                }).ToList());
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -9589,6 +9653,7 @@ namespace Nop.Services.Installation
             await InstallScheduleTasksAsync();
             await InstallReturnRequestReasonsAsync();
             await InstallReturnRequestActionsAsync();
+            await InstallPermissionsAsync();
         }
 
         /// <summary>

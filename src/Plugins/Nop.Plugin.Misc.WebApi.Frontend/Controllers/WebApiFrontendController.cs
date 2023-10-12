@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Security;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
@@ -30,7 +31,7 @@ namespace Nop.Plugin.Misc.WebApi.Frontend.Controllers
 
         public virtual async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             return View("~/Plugins/Misc.WebApi.Frontend/Views/Configure.cshtml");

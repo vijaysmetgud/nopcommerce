@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Messages;
+using Nop.Core.Security;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Messages;
@@ -53,7 +54,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageQueue))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageQueue))
                 return AccessDeniedView();
 
             //prepare model
@@ -65,7 +66,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> QueuedEmailList(QueuedEmailSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageQueue))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageQueue))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -88,7 +89,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageQueue))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageQueue))
                 return AccessDeniedView();
 
             //try to get a queued email with the specified id
@@ -107,7 +108,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Edit(QueuedEmailModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageQueue))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageQueue))
                 return AccessDeniedView();
 
             //try to get a queued email with the specified id
@@ -137,7 +138,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ActionName("Edit"), FormValueRequired("requeue")]
         public virtual async Task<IActionResult> Requeue(QueuedEmailModel queuedEmailModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageQueue))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageQueue))
                 return AccessDeniedView();
 
             //try to get a queued email with the specified id
@@ -176,7 +177,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageQueue))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageQueue))
                 return AccessDeniedView();
 
             //try to get a queued email with the specified id
@@ -194,7 +195,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageQueue))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageQueue))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -209,7 +210,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("delete-all")]
         public virtual async Task<IActionResult> DeleteAll()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageQueue))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageQueue))
                 return AccessDeniedView();
 
             await _queuedEmailService.DeleteAllEmailsAsync();

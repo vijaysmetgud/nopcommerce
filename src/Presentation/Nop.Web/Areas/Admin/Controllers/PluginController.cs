@@ -6,6 +6,7 @@ using Nop.Core.Domain.Payments;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Domain.Tax;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Authentication.External;
 using Nop.Services.Authentication.MultiFactor;
 using Nop.Services.Cms;
@@ -115,7 +116,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List(bool showWarnings = true)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             var model = await _pluginModelFactory.PreparePluginSearchModelAsync(new PluginSearchModel());
@@ -135,7 +136,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ListSelect(PluginSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -146,7 +147,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> AdminNavigationPlugins()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return Json(new List<string>());
 
             //prepare models
@@ -165,7 +166,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> UploadPluginsAndThemes(IFormFile archivefile)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             try
@@ -215,7 +216,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired(FormValueRequirement.StartsWith, "install-plugin-link-")]
         public virtual async Task<IActionResult> Install(IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             try
@@ -251,7 +252,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired(FormValueRequirement.StartsWith, "uninstall-plugin-link-")]
         public virtual async Task<IActionResult> Uninstall(IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             try
@@ -287,7 +288,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired(FormValueRequirement.StartsWith, "delete-plugin-link-")]
         public virtual async Task<IActionResult> Delete(IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             try
@@ -320,7 +321,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("plugin-reload-grid")]
         public virtual async Task<IActionResult> ReloadList()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             await _pluginService.UninstallPluginsAsync();
@@ -331,7 +332,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> UninstallAndDeleteUnusedPlugins(string[] names)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             foreach (var name in names)
@@ -358,7 +359,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("plugin-discard-changes")]
         public virtual async Task<IActionResult> DiscardChanges()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             _pluginService.ResetChanges();
@@ -368,7 +369,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditPopup(string systemName)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             //try to get a plugin with the specified system name
@@ -385,7 +386,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> EditPopup(PluginModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             //try to get a plugin with the specified system name
@@ -566,7 +567,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> OfficialFeed()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return AccessDeniedView();
 
             //prepare model
@@ -578,7 +579,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> OfficialFeedSelect(OfficialFeedPluginSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model

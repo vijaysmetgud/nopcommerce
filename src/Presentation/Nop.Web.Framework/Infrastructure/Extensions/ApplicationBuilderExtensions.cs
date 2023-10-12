@@ -18,6 +18,7 @@ using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Localization;
 using Nop.Core.Http;
 using Nop.Core.Infrastructure;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Data.Migrations;
 using Nop.Services.Authentication;
@@ -320,7 +321,7 @@ namespace Nop.Web.Framework.Infrastructure.Extensions
                 OnPrepareResponse = context =>
                 {
                     if (!DataSettingsManager.IsDatabaseInstalled() ||
-                        !EngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermissionProvider.ManageMaintenance).Result)
+                        !EngineContext.Current.Resolve<IPermissionService>().AuthorizeAsync(StandardPermission.ManageMaintenance).Result)
                     {
                         context.Context.Response.StatusCode = StatusCodes.Status404NotFound;
                         context.Context.Response.ContentLength = 0;

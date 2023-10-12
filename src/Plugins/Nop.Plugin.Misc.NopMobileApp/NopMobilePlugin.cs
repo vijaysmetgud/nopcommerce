@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Routing;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Plugins;
 using Nop.Services.Security;
@@ -53,7 +54,7 @@ namespace Nop.Plugin.Misc.NopMobileApp
 
         public async Task ManageSiteMapAsync(SiteMapNode rootNode)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePlugins))
                 return;
 
             var config = rootNode.ChildNodes.FirstOrDefault(node => node.SystemName.Equals("Configuration"));

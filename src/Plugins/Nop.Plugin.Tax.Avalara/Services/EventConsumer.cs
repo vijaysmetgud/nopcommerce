@@ -5,6 +5,7 @@ using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Gdpr;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Attributes;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
@@ -190,7 +191,7 @@ namespace Nop.Plugin.Tax.Avalara.Services
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return;
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return;
 
             //whether there is a form value for the entity use code

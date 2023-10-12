@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Affiliates;
 using Nop.Core.Domain.Common;
+using Nop.Core.Security;
 using Nop.Services.Affiliates;
 using Nop.Services.Common;
 using Nop.Services.Localization;
@@ -59,7 +60,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return AccessDeniedView();
 
             //prepare model
@@ -71,7 +72,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(AffiliateSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -82,7 +83,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return AccessDeniedView();
 
             //prepare model
@@ -95,7 +96,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Create(AffiliateModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -139,7 +140,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return AccessDeniedView();
 
             //try to get an affiliate with the specified id
@@ -156,7 +157,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(AffiliateModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return AccessDeniedView();
 
             //try to get an affiliate with the specified id
@@ -209,7 +210,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return AccessDeniedView();
 
             //try to get an affiliate with the specified id
@@ -231,7 +232,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AffiliatedOrderListGrid(AffiliatedOrderSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return await AccessDeniedDataTablesJson();
 
             //try to get an affiliate with the specified id
@@ -247,7 +248,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AffiliatedCustomerList(AffiliatedCustomerSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageAffiliates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageAffiliates))
                 return await AccessDeniedDataTablesJson();
 
             //try to get an affiliate with the specified id

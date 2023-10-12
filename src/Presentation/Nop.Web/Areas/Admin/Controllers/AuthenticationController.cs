@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Authentication.External;
 using Nop.Services.Authentication.MultiFactor;
 using Nop.Services.Configuration;
@@ -58,7 +59,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ExternalMethods()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageExternalAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageExternalAuthenticationMethods))
                 return AccessDeniedView();
 
             //prepare model
@@ -71,7 +72,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ExternalMethods(ExternalAuthenticationMethodSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageExternalAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageExternalAuthenticationMethods))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -83,7 +84,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ExternalMethodUpdate(ExternalAuthenticationMethodModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageExternalAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageExternalAuthenticationMethods))
                 return AccessDeniedView();
 
             var method = await _authenticationPluginManager.LoadPluginBySystemNameAsync(model.SystemName);
@@ -124,7 +125,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> MultiFactorMethods()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMultifactorAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMultifactorAuthenticationMethods))
                 return AccessDeniedView();
 
             //prepare model
@@ -137,7 +138,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> MultiFactorMethods(MultiFactorAuthenticationMethodSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMultifactorAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMultifactorAuthenticationMethods))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -149,7 +150,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> MultiFactorMethodUpdate(MultiFactorAuthenticationMethodModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMultifactorAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMultifactorAuthenticationMethods))
                 return AccessDeniedView();
 
             var method = await _multiFactorAuthenticationPluginManager.LoadPluginBySystemNameAsync(model.SystemName);

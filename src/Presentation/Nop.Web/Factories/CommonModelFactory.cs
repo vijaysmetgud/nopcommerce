@@ -15,6 +15,7 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Infrastructure;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Customers;
 using Nop.Services.Directory;
@@ -344,8 +345,8 @@ namespace Nop.Web.Factories
                 RegistrationType = _customerSettings.UserRegistrationType,
                 IsAuthenticated = await _customerService.IsRegisteredAsync(customer),
                 CustomerName = await _customerService.IsRegisteredAsync(customer) ? await _customerService.FormatUsernameAsync(customer) : string.Empty,
-                ShoppingCartEnabled = await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart),
-                WishlistEnabled = await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist),
+                ShoppingCartEnabled = await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart),
+                WishlistEnabled = await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist),
                 AllowPrivateMessages = await _customerService.IsRegisteredAsync(customer) && _forumSettings.AllowPrivateMessages,
                 UnreadPrivateMessages = unreadMessage,
                 AlertMessage = alertMessage,
@@ -378,7 +379,7 @@ namespace Nop.Web.Factories
             {
                 ImpersonatedCustomerName = await _customerService.IsRegisteredAsync(customer) ? await _customerService.FormatUsernameAsync(customer) : string.Empty,
                 IsCustomerImpersonated = _workContext.OriginalCustomerIfImpersonated != null,
-                DisplayAdminLink = await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel),
+                DisplayAdminLink = await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel),
                 EditPageUrl = _nopHtmlHelper.GetEditPageUrl()
             };
 
@@ -434,8 +435,8 @@ namespace Nop.Web.Factories
             var model = new FooterModel
             {
                 StoreName = await _localizationService.GetLocalizedAsync(store, x => x.Name),
-                WishlistEnabled = await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableWishlist),
-                ShoppingCartEnabled = await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableShoppingCart),
+                WishlistEnabled = await _permissionService.AuthorizeAsync(StandardPermission.EnableWishlist),
+                ShoppingCartEnabled = await _permissionService.AuthorizeAsync(StandardPermission.EnableShoppingCart),
                 SitemapEnabled = _sitemapSettings.SitemapEnabled,
                 SearchEnabled = _catalogSettings.ProductSearchEnabled,
                 WorkingLanguageId = (await _workContext.GetWorkingLanguageAsync()).Id,

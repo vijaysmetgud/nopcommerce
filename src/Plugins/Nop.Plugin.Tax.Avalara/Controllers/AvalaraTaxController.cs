@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Domain.Tax;
+using Nop.Core.Security;
 using Nop.Plugin.Tax.Avalara.Services;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
@@ -74,7 +75,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
                 return await base.Categories();
             }
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -97,7 +98,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return await base.Categories(searchModel);
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return await AccessDeniedDataTablesJson();
 
             //get tax categories
@@ -154,7 +155,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return new NullJsonResult();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -178,7 +179,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return new NullJsonResult();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //try to get a tax category with the specified id
@@ -203,7 +204,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return await Categories();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //import tax caodes
@@ -228,7 +229,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return await Categories();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             //export tax codes
@@ -254,7 +255,7 @@ namespace Nop.Plugin.Tax.Avalara.Controllers
             if (!await _taxPluginManager.IsPluginActiveAsync(AvalaraTaxDefaults.SystemName))
                 return await Categories();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTaxSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageTaxSettings))
                 return AccessDeniedView();
 
             var deleted = await _avalaraTaxManager.DeleteSystemTaxCodesAsync();

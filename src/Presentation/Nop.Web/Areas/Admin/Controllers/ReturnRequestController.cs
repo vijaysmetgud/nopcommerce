@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
@@ -93,7 +94,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageReturnRequests))
                 return AccessDeniedView();
 
             //prepare model
@@ -105,7 +106,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(ReturnRequestSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageReturnRequests))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -116,7 +117,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageReturnRequests))
                 return AccessDeniedView();
 
             //try to get a return request with the specified id
@@ -134,7 +135,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Edit(ReturnRequestModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageReturnRequests))
                 return AccessDeniedView();
 
             //try to get a return request with the specified id
@@ -192,7 +193,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("notify-customer")]
         public virtual async Task<IActionResult> NotifyCustomer(ReturnRequestModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageReturnRequests))
                 return AccessDeniedView();
 
             //try to get a return request with the specified id
@@ -219,7 +220,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageReturnRequests))
                 return AccessDeniedView();
 
             //try to get a return request with the specified id
@@ -242,7 +243,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ReturnRequestReasonList()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //select an appropriate card
@@ -255,7 +256,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ReturnRequestReasonList(ReturnRequestReasonSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -266,7 +267,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ReturnRequestReasonCreate()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -278,7 +279,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> ReturnRequestReasonCreate(ReturnRequestReasonModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -305,7 +306,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ReturnRequestReasonEdit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a return request reason with the specified id
@@ -322,7 +323,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> ReturnRequestReasonEdit(ReturnRequestReasonModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a return request reason with the specified id
@@ -356,7 +357,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ReturnRequestReasonDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a return request reason with the specified id
@@ -376,7 +377,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ReturnRequestActionList()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //select an appropriate card
@@ -389,7 +390,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ReturnRequestActionList(ReturnRequestActionSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -400,7 +401,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ReturnRequestActionCreate()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -412,7 +413,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> ReturnRequestActionCreate(ReturnRequestActionModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -439,7 +440,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ReturnRequestActionEdit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a return request action with the specified id
@@ -456,7 +457,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> ReturnRequestActionEdit(ReturnRequestActionModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a return request action with the specified id
@@ -490,7 +491,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ReturnRequestActionDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a return request action with the specified id

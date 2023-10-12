@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
@@ -79,7 +80,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //select an appropriate card
@@ -92,7 +93,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(ReviewTypeSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -103,7 +104,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -115,7 +116,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(ReviewTypeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -144,7 +145,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get an product review type with the specified id
@@ -161,7 +162,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(ReviewTypeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get an review type with the specified id
@@ -197,7 +198,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get an review type with the specified id

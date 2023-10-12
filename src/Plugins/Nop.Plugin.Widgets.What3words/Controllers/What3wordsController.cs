@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Plugin.Widgets.What3words.Models;
 using Nop.Plugin.Widgets.What3words.Services;
 using Nop.Services.Configuration;
@@ -61,7 +62,7 @@ namespace Nop.Plugin.Widgets.What3words.Controllers
 
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             var model = new ConfigurationModel
@@ -75,7 +76,7 @@ namespace Nop.Plugin.Widgets.What3words.Controllers
         [HttpPost]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)

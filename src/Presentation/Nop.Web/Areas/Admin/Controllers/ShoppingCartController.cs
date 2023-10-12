@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Customers;
 using Nop.Services.Orders;
 using Nop.Services.Security;
@@ -37,7 +38,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CurrentCarts()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCurrentCarts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCurrentCarts))
                 return AccessDeniedView();
 
             //prepare model
@@ -49,7 +50,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CurrentCarts(ShoppingCartSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCurrentCarts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCurrentCarts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -61,7 +62,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> GetCartDetails(ShoppingCartItemSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCurrentCarts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCurrentCarts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a customer with the specified id
@@ -77,7 +78,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteItem(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCurrentCarts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCurrentCarts))
                 return await AccessDeniedDataTablesJson();
 
             await _shoppingCartService.DeleteShoppingCartItemAsync(id);

@@ -5,6 +5,7 @@ using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Security;
 using Nop.Core.Events;
 using Nop.Core.Rss;
+using Nop.Core.Security;
 using Nop.Services.Blogs;
 using Nop.Services.Customers;
 using Nop.Services.Localization;
@@ -158,7 +159,7 @@ namespace Nop.Web.Controllers
                 !await _storeMappingService.AuthorizeAsync(blogPost);
             //Check whether the current user has a "Manage blog" permission (usually a store owner)
             //We should allows him (her) to use "Preview" functionality
-            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageBlog);
+            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageBlog);
             if (notAvailable && !hasAdminAccess)
                 return InvokeHttp404();
 

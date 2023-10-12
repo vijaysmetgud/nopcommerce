@@ -67,6 +67,10 @@ namespace Nop.Services.Security
             return await _staticCacheManager.GetAsync(key, async () => await query.ToListAsync());
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Gets a permission
         /// </summary>
@@ -75,24 +79,21 @@ namespace Nop.Services.Security
         /// A task that represents the asynchronous operation
         /// The task result contains the permission
         /// </returns>
-        protected virtual async Task<PermissionRecord> GetPermissionRecordBySystemNameAsync(string systemName)
+        public virtual async Task<PermissionRecord> GetPermissionRecordBySystemNameAsync(string systemName)
         {
             if (string.IsNullOrWhiteSpace(systemName))
                 return null;
 
             var query = from pr in _permissionRecordRepository.Table
-                        where pr.SystemName == systemName
-                        orderby pr.Id
-                        select pr;
+                where pr.SystemName == systemName
+                orderby pr.Id
+                select pr;
 
             var permissionRecord = await query.FirstOrDefaultAsync();
+
             return permissionRecord;
         }
-
-        #endregion
-
-        #region Methods
-
+        
         /// <summary>
         /// Gets all permissions
         /// </summary>
@@ -120,12 +121,15 @@ namespace Nop.Services.Security
         public virtual async Task InsertPermissionRecordAsync(PermissionRecord permission)
         {
             await _permissionRecordRepository.InsertAsync(permission);
+
+            //save localization
+            await _localizationService.SaveLocalizedPermissionNameAsync(permission);
         }
 
         /// <summary>
         /// Gets a permission record by identifier
         /// </summary>
-        /// <param name="permission">Permission</param>
+        /// <param name="permissionId">Permission identifier</param>
         /// <returns>
         /// A task that represents the asynchronous operation
         /// The task result contains a permission record
@@ -153,96 +157,6 @@ namespace Nop.Services.Security
         public virtual async Task DeletePermissionRecordAsync(PermissionRecord permission)
         {
             await _permissionRecordRepository.DeleteAsync(permission);
-        }
-
-        /// <summary>
-        /// Install permissions
-        /// </summary>
-        /// <param name="permissionProvider">Permission provider</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task InstallPermissionsAsync(IPermissionProvider permissionProvider)
-        {
-            //install new permissions
-            var permissions = permissionProvider.GetPermissions();
-            //default customer role mappings
-            var defaultPermissions = permissionProvider.GetDefaultPermissions().ToList();
-
-            foreach (var permission in permissions)
-            {
-                var permission1 = await GetPermissionRecordBySystemNameAsync(permission.SystemName);
-                if (permission1 != null)
-                    continue;
-
-                //new permission (install it)
-                permission1 = new PermissionRecord
-                {
-                    Name = permission.Name,
-                    SystemName = permission.SystemName,
-                    Category = permission.Category
-                };
-
-                //save new permission
-                await InsertPermissionRecordAsync(permission1);
-
-                foreach (var defaultPermission in defaultPermissions)
-                {
-                    var customerRole = await _customerService.GetCustomerRoleBySystemNameAsync(defaultPermission.systemRoleName);
-                    if (customerRole == null)
-                    {
-                        //new role (save it)
-                        customerRole = new CustomerRole
-                        {
-                            Name = defaultPermission.systemRoleName,
-                            Active = true,
-                            SystemName = defaultPermission.systemRoleName
-                        };
-                        await _customerService.InsertCustomerRoleAsync(customerRole);
-                    }
-
-                    var defaultMappingProvided = defaultPermission.permissions.Any(p => p.SystemName == permission1.SystemName);
-
-                    if (!defaultMappingProvided)
-                        continue;
-
-                    await InsertPermissionRecordCustomerRoleMappingAsync(new PermissionRecordCustomerRoleMapping { CustomerRoleId = customerRole.Id, PermissionRecordId = permission1.Id });
-                }
-
-                //save localization
-                await _localizationService.SaveLocalizedPermissionNameAsync(permission1);
-            }
-        }
-
-        /// <summary>
-        /// Install permissions
-        /// </summary>
-        /// <param name="permissionProvider">Permission provider</param>
-        /// <returns>A task that represents the asynchronous operation</returns>
-        public virtual async Task UninstallPermissionsAsync(IPermissionProvider permissionProvider)
-        {
-            //default customer role mappings
-            var defaultPermissions = permissionProvider.GetDefaultPermissions().ToList();
-
-            //uninstall permissions
-            foreach (var permission in permissionProvider.GetPermissions())
-            {
-                var permission1 = await GetPermissionRecordBySystemNameAsync(permission.SystemName);
-                if (permission1 == null)
-                    continue;
-
-                //clear permission record customer role mapping
-                foreach (var defaultPermission in defaultPermissions)
-                {
-                    var customerRole = await _customerService.GetCustomerRoleBySystemNameAsync(defaultPermission.systemRoleName);
-
-                    await DeletePermissionRecordCustomerRoleMappingAsync(permission1.Id, customerRole.Id);
-                }
-
-                //delete permission
-                await DeletePermissionRecordAsync(permission1);
-
-                //save localization
-                await _localizationService.DeleteLocalizedPermissionNameAsync(permission1);
-            }
         }
 
         /// <summary>
@@ -355,7 +269,7 @@ namespace Nop.Services.Security
 
             return await query.ToListAsync();
         }
-
+        
         /// <summary>
         /// Delete a permission record-customer role mapping
         /// </summary>
@@ -381,7 +295,7 @@ namespace Nop.Services.Security
         {
             await _permissionRecordCustomerRoleMappingRepository.InsertAsync(permissionRecordCustomerRoleMapping);
         }
-
+        
         #endregion
     }
 }

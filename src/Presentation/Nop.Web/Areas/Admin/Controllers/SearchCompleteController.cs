@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Security;
 
@@ -33,7 +34,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> SearchAutoComplete(string term)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel))
                 return Content(string.Empty);
 
             const int searchTermMinimumLength = 3;

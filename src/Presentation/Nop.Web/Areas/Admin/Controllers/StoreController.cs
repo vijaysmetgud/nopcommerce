@@ -2,6 +2,7 @@
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Stores;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
@@ -109,7 +110,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageStores))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageStores))
                 return AccessDeniedView();
 
             //prepare model
@@ -121,7 +122,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(StoreSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageStores))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageStores))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -132,7 +133,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageStores))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageStores))
                 return AccessDeniedView();
 
             //prepare model
@@ -144,7 +145,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(StoreModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageStores))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageStores))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -179,7 +180,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpsRequirement(ignore: true)]
         public virtual async Task<IActionResult> SetStoreSslByCurrentRequestScheme(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageStores))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageStores))
                 return AccessDeniedView();
 
             //try to get a store with the specified id
@@ -203,7 +204,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpsRequirement(ignore: true)]
         public virtual async Task<IActionResult> Edit(int id, bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageStores))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageStores))
                 return AccessDeniedView();
 
             //try to get a store with the specified id
@@ -232,7 +233,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Edit(StoreModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageStores))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageStores))
                 return AccessDeniedView();
 
             //try to get a store with the specified id
@@ -272,7 +273,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageStores))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageStores))
                 return AccessDeniedView();
 
             //try to get a store with the specified id

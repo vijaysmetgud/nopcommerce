@@ -10,6 +10,7 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Vendors;
 using Nop.Core.Http;
 using Nop.Core.Infrastructure;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
@@ -796,7 +797,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //prepare model
@@ -808,7 +809,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductList(ProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -834,7 +835,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //validate maximum number of products per vendor
@@ -867,7 +868,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(ProductModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //validate maximum number of products per vendor
@@ -949,7 +950,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -971,7 +972,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(ProductModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -1147,7 +1148,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -1174,7 +1175,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -1190,7 +1191,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CopyProduct(ProductModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var copyModel = model.CopyProductModel;
@@ -1252,7 +1253,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         {
             var result = string.Empty;
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return Json(new { Text = result });
 
             if (string.IsNullOrWhiteSpace(productIds))
@@ -1283,7 +1284,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> RequiredProductAddPopup()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //prepare model
@@ -1295,7 +1296,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> RequiredProductAddPopupList(AddRequiredProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -1311,7 +1312,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> RelatedProductList(RelatedProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -1332,7 +1333,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> RelatedProductUpdate(RelatedProductModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a related product with the specified id
@@ -1357,7 +1358,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> RelatedProductDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a related product with the specified id
@@ -1382,7 +1383,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> RelatedProductAddPopup(int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //prepare model
@@ -1394,7 +1395,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> RelatedProductAddPopupList(AddRelatedProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -1407,7 +1408,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> RelatedProductAddPopup(AddRelatedProductModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var selectedProducts = await _productService.GetProductsByIdsAsync(model.SelectedProductIds.ToArray());
@@ -1445,7 +1446,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CrossSellProductList(CrossSellProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -1466,7 +1467,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CrossSellProductDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a cross-sell product with the specified id
@@ -1489,7 +1490,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CrossSellProductAddPopup(int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //prepare model
@@ -1501,7 +1502,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CrossSellProductAddPopupList(AddCrossSellProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -1514,7 +1515,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> CrossSellProductAddPopup(AddCrossSellProductModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var selectedProducts = await _productService.GetProductsByIdsAsync(model.SelectedProductIds.ToArray());
@@ -1551,7 +1552,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AssociatedProductList(AssociatedProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -1572,7 +1573,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AssociatedProductUpdate(AssociatedProductModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get an associated product with the specified id
@@ -1593,7 +1594,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AssociatedProductDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get an associated product with the specified id
@@ -1613,7 +1614,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> AssociatedProductAddPopup(int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //prepare model
@@ -1625,7 +1626,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AssociatedProductAddPopupList(AddAssociatedProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -1638,7 +1639,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> AssociatedProductAddPopup(AddAssociatedProductModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var selectedProducts = await _productService.GetProductsByIdsAsync(model.SelectedProductIds.ToArray());
@@ -1692,7 +1693,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [IgnoreAntiforgeryToken]
         public virtual async Task<IActionResult> ProductPictureAdd(int productId, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             if (productId == 0)
@@ -1742,7 +1743,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductPictureList(ProductPictureSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -1763,7 +1764,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductPictureUpdate(ProductPictureModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product picture with the specified id
@@ -1799,7 +1800,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductPictureDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product picture with the specified id
@@ -1834,7 +1835,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductVideoAdd(int productId, [Validate] ProductVideoModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             if (productId == 0)
@@ -1902,7 +1903,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductVideoList(ProductVideoSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -1923,7 +1924,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductVideoUpdate([Validate] ProductVideoModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product picture with the specified id
@@ -1971,7 +1972,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductVideoDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product video with the specified id
@@ -2006,7 +2007,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> ProductSpecificationAttributeAdd(AddSpecificationAttributeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var product = await _productService.GetProductByIdAsync(model.ProductId);
@@ -2082,7 +2083,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductSpecAttrList(ProductSpecificationAttributeSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -2103,7 +2104,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> ProductSpecAttrUpdate(AddSpecificationAttributeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product specification attribute with the specified id
@@ -2182,7 +2183,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductSpecAttributeAddOrEdit(int productId, int? specificationId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             if (await _productService.GetProductByIdAsync(productId) == null)
@@ -2210,7 +2211,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductSpecAttrDelete(AddSpecificationAttributeModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product specification attribute with the specified id
@@ -2245,7 +2246,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductTags()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductTags))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductTags))
                 return AccessDeniedView();
 
             //prepare model
@@ -2257,7 +2258,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductTags(ProductTagSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductTags))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductTags))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -2269,7 +2270,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductTagDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductTags))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductTags))
                 return AccessDeniedView();
 
             //try to get a product tag with the specified id
@@ -2286,7 +2287,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductTagsDelete(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductTags))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductTags))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -2300,7 +2301,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditProductTag(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductTags))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductTags))
                 return AccessDeniedView();
 
             //try to get a product tag with the specified id
@@ -2317,7 +2318,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditProductTag(ProductTagModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProductTags))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProductTags))
                 return AccessDeniedView();
 
             //try to get a product tag with the specified id
@@ -2352,7 +2353,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PurchasedWithOrders(ProductOrderSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -2378,7 +2379,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("download-catalog-pdf")]
         public virtual async Task<IActionResult> DownloadCatalogAsPdf(ProductSearchModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //a vendor should have access only to his products
@@ -2435,7 +2436,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("exportxml-all")]
         public virtual async Task<IActionResult> ExportXmlAll(ProductSearchModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //a vendor should have access only to his products
@@ -2486,7 +2487,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ExportXmlSelected(string selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var products = new List<Product>();
@@ -2521,7 +2522,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("exportexcel-all")]
         public virtual async Task<IActionResult> ExportExcelAll(ProductSearchModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //a vendor should have access only to his products
@@ -2573,7 +2574,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ExportExcelSelected(string selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             var products = new List<Product>();
@@ -2608,7 +2609,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ImportExcel(IFormFile importexcelfile)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             if (await _workContext.GetCurrentVendorAsync() != null && !_vendorSettings.AllowVendorsToImportProducts)
@@ -2647,7 +2648,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> TierPriceList(TierPriceSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -2667,7 +2668,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> TierPriceCreatePopup(int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -2684,7 +2685,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> TierPriceCreatePopup(TierPriceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -2722,7 +2723,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> TierPriceEditPopup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a tier price with the specified id
@@ -2748,7 +2749,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> TierPriceEditPopup(TierPriceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a tier price with the specified id
@@ -2787,7 +2788,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> TierPriceDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a tier price with the specified id
@@ -2818,7 +2819,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeMappingList(ProductAttributeMappingSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -2838,7 +2839,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAttributeMappingCreate(int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -2862,7 +2863,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> ProductAttributeMappingCreate(ProductAttributeMappingModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -2939,7 +2940,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAttributeMappingEdit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product attribute mapping with the specified id
@@ -2967,7 +2968,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> ProductAttributeMappingEdit(ProductAttributeMappingModel model, bool continueEditing, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product attribute mapping with the specified id
@@ -3021,7 +3022,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeMappingDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product attribute mapping with the specified id
@@ -3069,7 +3070,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeValueList(ProductAttributeValueSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product attribute mapping with the specified id
@@ -3093,7 +3094,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAttributeValueCreatePopup(int productAttributeMappingId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product attribute mapping with the specified id
@@ -3118,7 +3119,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeValueCreatePopup(ProductAttributeValueModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product attribute mapping with the specified id
@@ -3182,7 +3183,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAttributeValueEditPopup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product attribute value with the specified id
@@ -3213,7 +3214,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeValueEditPopup(ProductAttributeValueModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product attribute value with the specified id
@@ -3282,7 +3283,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeValueDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product attribute value with the specified id
@@ -3325,7 +3326,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> AssociateProductToAttributeValuePopup()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //prepare model
@@ -3337,7 +3338,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> AssociateProductToAttributeValuePopupList(AssociateProductToAttributeValueSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -3350,7 +3351,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> AssociateProductToAttributeValuePopup([Bind(Prefix = nameof(AssociateProductToAttributeValueModel))] AssociateProductToAttributeValueModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -3408,7 +3409,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeCombinationList(ProductAttributeCombinationSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a product with the specified id
@@ -3429,7 +3430,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeCombinationDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a combination with the specified id
@@ -3452,7 +3453,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAttributeCombinationCreatePopup(int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -3474,7 +3475,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeCombinationCreatePopup(int productId, ProductAttributeCombinationModel model, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -3534,7 +3535,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAttributeCombinationGeneratePopup(int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -3556,7 +3557,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeCombinationGeneratePopup(IFormCollection form, ProductAttributeCombinationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -3598,7 +3599,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAttributeCombinationEditPopup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a combination with the specified id
@@ -3625,7 +3626,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAttributeCombinationEditPopup(ProductAttributeCombinationModel model, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a combination with the specified id
@@ -3692,7 +3693,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> GenerateAllAttributeCombinations(int productId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //try to get a product with the specified id
@@ -3716,7 +3717,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SaveProductEditorSettings(ProductModel model, string returnUrl = "")
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return AccessDeniedView();
 
             //vendors cannot manage these settings
@@ -3745,7 +3746,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> StockQuantityHistory(StockQuantityHistorySearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageProducts))
                 return await AccessDeniedDataTablesJson();
 
             var product = await _productService.GetProductByIdAsync(searchModel.ProductId)

@@ -5,6 +5,7 @@ using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Directory;
@@ -122,7 +123,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Providers(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -145,7 +146,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Providers(ShippingProviderSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -157,7 +158,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProviderUpdate(ShippingProviderModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var srcm = await _shippingPluginManager.LoadPluginBySystemNameAsync(model.SystemName);
@@ -200,7 +201,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> PickupPointProviders()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -212,7 +213,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PickupPointProviders(PickupPointProviderSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -224,7 +225,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PickupPointProviderUpdate(PickupPointProviderModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var pickupPointProvider = await _pickupPluginManager.LoadPluginBySystemNameAsync(model.SystemName);
@@ -265,7 +266,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Methods()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -277,7 +278,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Methods(ShippingMethodSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -288,7 +289,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateMethod()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -300,7 +301,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateMethod(ShippingMethodModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -324,7 +325,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditMethod(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a shipping method with the specified id
@@ -341,7 +342,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditMethod(ShippingMethodModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a shipping method with the specified id
@@ -372,7 +373,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteMethod(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a shipping method with the specified id
@@ -393,7 +394,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> DatesAndRanges()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -409,7 +410,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeliveryDates(DeliveryDateSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -420,7 +421,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateDeliveryDate()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -432,7 +433,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateDeliveryDate(DeliveryDateModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -457,7 +458,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditDeliveryDate(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a delivery date with the specified id
@@ -474,7 +475,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditDeliveryDate(DeliveryDateModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a delivery date with the specified id
@@ -505,7 +506,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteDeliveryDate(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a delivery date with the specified id
@@ -527,7 +528,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAvailabilityRanges(ProductAvailabilityRangeSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -538,7 +539,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateProductAvailabilityRange()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -550,7 +551,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateProductAvailabilityRange(ProductAvailabilityRangeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -575,7 +576,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditProductAvailabilityRange(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a product availability range with the specified id
@@ -592,7 +593,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditProductAvailabilityRange(ProductAvailabilityRangeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a product availability range with the specified id
@@ -623,7 +624,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteProductAvailabilityRange(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a product availability range with the specified id
@@ -644,7 +645,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Warehouses()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -656,7 +657,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Warehouses(WarehouseSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -667,7 +668,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> CreateWarehouse()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -679,7 +680,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> CreateWarehouse(WarehouseModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -712,7 +713,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> EditWarehouse(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a warehouse with the specified id
@@ -729,7 +730,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> EditWarehouse(WarehouseModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a warehouse with the specified id
@@ -776,7 +777,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteWarehouse(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //try to get a warehouse with the specified id
@@ -801,7 +802,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Restrictions()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -817,7 +818,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ActionName("Restrictions")]
         public virtual async Task<IActionResult> RestrictionSave(ShippingMethodRestrictionModel model, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageShippingSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageShippingSettings))
                 return AccessDeniedView();
 
             var countries = await _countryService.GetAllCountriesAsync(showHidden: true);

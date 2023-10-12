@@ -236,7 +236,7 @@ namespace Nop.Data.Migrations.UpgradeTo460
                     {
                         SystemName = "EnableMultiFactorAuthentication",
                         Name = "Security. Enable Multi-factor authentication",
-                        Category = "Security"
+                        CategoryType = PermissionCategoryType.Security
                     }
                 );
 

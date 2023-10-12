@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
@@ -51,7 +52,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSystemLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSystemLog))
                 return AccessDeniedView();
 
             //prepare model
@@ -63,7 +64,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> LogList(LogSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSystemLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSystemLog))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -76,7 +77,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("clearall")]
         public virtual async Task<IActionResult> ClearAll()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSystemLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSystemLog))
                 return AccessDeniedView();
 
             await _logger.ClearLogAsync();
@@ -91,7 +92,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> View(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSystemLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSystemLog))
                 return AccessDeniedView();
 
             //try to get a log with the specified id
@@ -108,7 +109,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSystemLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSystemLog))
                 return AccessDeniedView();
 
             //try to get a log with the specified id
@@ -129,7 +130,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSystemLog))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSystemLog))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)

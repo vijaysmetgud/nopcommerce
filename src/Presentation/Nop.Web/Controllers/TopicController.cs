@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Security;
 using Nop.Services.Stores;
@@ -58,7 +59,7 @@ namespace Nop.Web.Controllers
                 !await _storeMappingService.AuthorizeAsync(topic);
 
             //allow administrators to preview any topic
-            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageTopics);
+            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageTopics);
 
             if (notAvailable && !hasAdminAccess)
                 return InvokeHttp404();

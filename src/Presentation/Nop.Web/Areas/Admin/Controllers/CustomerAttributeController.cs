@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Security;
 using Nop.Services.Attributes;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
@@ -83,7 +84,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //select an appropriate card
@@ -96,7 +97,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(CustomerAttributeSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -107,7 +108,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //prepare model
@@ -119,7 +120,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(CustomerAttributeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -152,7 +153,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a customer attribute with the specified id
@@ -169,7 +170,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(CustomerAttributeModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             var customerAttribute = await _customerAttributeService.GetAttributeByIdAsync(model.Id);
@@ -203,7 +204,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             var customerAttribute = await _customerAttributeService.GetAttributeByIdAsync(id);
@@ -225,7 +226,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ValueList(CustomerAttributeValueSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a customer attribute with the specified id
@@ -240,7 +241,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ValueCreatePopup(int customerAttributeId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a customer attribute with the specified id
@@ -258,7 +259,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ValueCreatePopup(CustomerAttributeValueModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a customer attribute with the specified id
@@ -291,7 +292,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ValueEditPopup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a customer attribute value with the specified id
@@ -313,7 +314,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ValueEditPopup(CustomerAttributeValueModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a customer attribute value with the specified id
@@ -353,7 +354,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ValueDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageSettings))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageSettings))
                 return AccessDeniedView();
 
             //try to get a customer attribute value with the specified id

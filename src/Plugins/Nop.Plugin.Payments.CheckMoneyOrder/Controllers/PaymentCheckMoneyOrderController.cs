@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Plugin.Payments.CheckMoneyOrder.Models;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
@@ -50,7 +51,7 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder.Controllers
 
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             //load settings for a chosen store scope
@@ -87,7 +88,7 @@ namespace Nop.Plugin.Payments.CheckMoneyOrder.Controllers
         [HttpPost]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)

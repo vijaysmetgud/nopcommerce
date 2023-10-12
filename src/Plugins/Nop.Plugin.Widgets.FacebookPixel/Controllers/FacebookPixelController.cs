@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core;
 using Nop.Core.Domain;
+using Nop.Core.Security;
 using Nop.Plugin.Widgets.FacebookPixel.Domain;
 using Nop.Plugin.Widgets.FacebookPixel.Models;
 using Nop.Plugin.Widgets.FacebookPixel.Services;
@@ -94,7 +95,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
 
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             //prepare plugin configuration model
@@ -112,7 +113,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(FacebookPixelSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return await AccessDeniedDataTablesJson();
 
             var configurations = await _facebookPixelService.GetPagedConfigurationsAsync(searchModel.StoreId, searchModel.Page - 1, searchModel.PageSize);
@@ -136,7 +137,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             //set default values
@@ -159,7 +160,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Create(FacebookPixelModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -184,7 +185,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             var configuration = await _facebookPixelService.GetConfigurationByIdAsync(id);
@@ -208,7 +209,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Edit(FacebookPixelModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             var configuration = await _facebookPixelService.GetConfigurationByIdAsync(model.Id);
@@ -244,7 +245,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             var configuration = await _facebookPixelService.GetConfigurationByIdAsync(id);
@@ -262,7 +263,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CustomEventList(CustomEventSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return await AccessDeniedDataTablesJson();
 
             var configuration = await _facebookPixelService.GetConfigurationByIdAsync(searchModel.ConfigurationId)
@@ -287,7 +288,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CustomEventAdd(int configurationId, [Validate] CustomEventModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -302,7 +303,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CustomEventDelete(int configurationId, string id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             //save custom events configuration
@@ -314,7 +315,7 @@ namespace Nop.Plugin.Widgets.FacebookPixel.Controllers
 
         public async Task<IActionResult> CookieSettingsWarning(bool disableForUsersNotAcceptingCookieConsent)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageWidgets))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageWidgets))
                 return AccessDeniedView();
 
             if (!disableForUsersNotAcceptingCookieConsent || _storeInformationSettings.DisplayEuCookieLawWarning)

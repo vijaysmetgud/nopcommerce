@@ -11,6 +11,7 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Tax;
 using Nop.Core.Domain.Vendors;
+using Nop.Core.Security;
 using Nop.Services.Attributes;
 using Nop.Services.Authentication.External;
 using Nop.Services.Authentication.MultiFactor;
@@ -732,7 +733,7 @@ namespace Nop.Web.Factories
                 });
             }
 
-            if (await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableMultiFactorAuthentication) &&
+            if (await _permissionService.AuthorizeAsync(StandardPermission.EnableMultiFactorAuthentication) &&
                 await _multiFactorAuthenticationPluginManager.HasActivePluginsAsync())
             {
                 model.CustomerNavigationItems.Add(new CustomerNavigationItemModel

@@ -2,6 +2,7 @@
 using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Messages;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
@@ -70,7 +71,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             //prepare model
@@ -93,7 +94,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(EmailAccountSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -104,7 +105,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> MarkAsDefaultEmail(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             var defaultEmailAccount = await _emailAccountService.GetEmailAccountByIdAsync(id);
@@ -119,7 +120,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             //prepare model
@@ -131,7 +132,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(EmailAccountModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -160,7 +161,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id, bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             //try to get an email account with the specified id
@@ -189,7 +190,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Edit(EmailAccountModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             //try to get an email account with the specified id
@@ -222,7 +223,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("changepassword")]
         public virtual async Task<IActionResult> ChangePassword(EmailAccountModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             //try to get an email account with the specified id
@@ -243,7 +244,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("sendtestemail")]
         public virtual async Task<IActionResult> SendTestEmail(EmailAccountModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             //try to get an email account with the specified id
@@ -285,7 +286,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageEmailAccounts))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageEmailAccounts))
                 return AccessDeniedView();
 
             //try to get an email account with the specified id

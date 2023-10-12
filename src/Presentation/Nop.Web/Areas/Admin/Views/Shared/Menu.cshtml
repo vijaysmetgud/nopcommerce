@@ -1,5 +1,6 @@
 ﻿@using Nop.Services.Plugins
 @using Nop.Services.Security
+@using Nop.Core.Security
 
 @inject IPermissionService permissionService
 @inject IPluginManager<IAdminMenuPlugin> adminMenuPluginManager
@@ -27,7 +28,7 @@
         if (pluginNode?.Visible ?? false)
         {
             pluginNode.Visible = pluginNode.ChildNodes.Any(x => x.Visible) 
-                &&  await permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePlugins, customer);
+                &&  await permissionService.AuthorizeAsync(StandardPermission.ManagePlugins, customer);
         }
 
         //display menu items

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core.Domain.Messages;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
@@ -121,7 +122,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageTemplates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageTemplates))
                 return AccessDeniedView();
 
             //prepare model
@@ -133,7 +134,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(MessageTemplateSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageTemplates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageTemplates))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -144,7 +145,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageTemplates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageTemplates))
                 return AccessDeniedView();
 
             //try to get a message template with the specified id
@@ -162,7 +163,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Edit(MessageTemplateModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageTemplates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageTemplates))
                 return AccessDeniedView();
 
             //try to get a message template with the specified id
@@ -209,7 +210,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageTemplates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageTemplates))
                 return AccessDeniedView();
 
             //try to get a message template with the specified id
@@ -232,7 +233,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("message-template-copy")]
         public virtual async Task<IActionResult> CopyTemplate(MessageTemplateModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageTemplates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageTemplates))
                 return AccessDeniedView();
 
             //try to get a message template with the specified id
@@ -257,7 +258,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> TestTemplate(int id, int languageId = 0)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageTemplates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageTemplates))
                 return AccessDeniedView();
 
             //try to get a message template with the specified id
@@ -276,7 +277,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("send-test")]
         public virtual async Task<IActionResult> TestTemplate(TestMessageTemplateModel model, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMessageTemplates))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMessageTemplates))
                 return AccessDeniedView();
 
             //try to get a message template with the specified id

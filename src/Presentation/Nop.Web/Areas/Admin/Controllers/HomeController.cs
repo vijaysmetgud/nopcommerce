@@ -2,6 +2,7 @@
 using Nop.Core;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
@@ -64,7 +65,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             var hideCard = await _genericAttributeService.GetAttributeAsync<bool>(customer, NopCustomerDefaults.HideConfigurationStepsAttribute);
             var closeCard = await _genericAttributeService.GetAttributeAsync<bool>(customer, NopCustomerDefaults.CloseConfigurationStepsAttribute);
 
-            if ((hideCard || closeCard) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance))
+            if ((hideCard || closeCard) && await _permissionService.AuthorizeAsync(StandardPermission.ManageMaintenance))
             {
                 var warnings = await _commonModelFactory.PrepareSystemWarningModelsAsync();
                 if (warnings.Any(warning => warning.Level == SystemWarningLevel.Fail || warning.Level == SystemWarningLevel.Warning))

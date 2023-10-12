@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Core.Domain.Directory;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Directory;
 using Nop.Services.ExportImport;
@@ -131,7 +132,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //prepare model
@@ -143,7 +144,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> CountryList(CountrySearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -154,7 +155,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //prepare model
@@ -166,7 +167,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(CountryModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -201,7 +202,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //try to get a country with the specified id
@@ -218,7 +219,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(CountryModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //try to get a country with the specified id
@@ -259,7 +260,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //try to get a country with the specified id
@@ -292,7 +293,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> PublishSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -311,7 +312,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> UnpublishSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -334,7 +335,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> States(StateProvinceSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a country with the specified id
@@ -349,7 +350,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> StateCreatePopup(int countryId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //try to get a country with the specified id
@@ -366,7 +367,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> StateCreatePopup(StateProvinceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //try to get a country with the specified id
@@ -400,7 +401,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> StateEditPopup(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //try to get a state with the specified id
@@ -422,7 +423,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> StateEditPopup(StateProvinceModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //try to get a state with the specified id
@@ -461,7 +462,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> StateDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             //try to get a state with the specified id
@@ -542,7 +543,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ExportCsv()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             var fileName = $"states_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}_{CommonHelper.GenerateRandomDigitCode(4)}.csv";
@@ -556,7 +557,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ImportCsv(IFormFile importcsvfile)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCountries))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageCountries))
                 return AccessDeniedView();
 
             try

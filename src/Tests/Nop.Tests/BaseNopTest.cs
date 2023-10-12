@@ -29,8 +29,10 @@ using Nop.Core.Configuration;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Media;
+using Nop.Core.Domain.Security;
 using Nop.Core.Events;
 using Nop.Core.Infrastructure;
+using Nop.Core.Security;
 using Nop.Data;
 using Nop.Data.Configuration;
 using Nop.Data.Mapping;
@@ -100,6 +102,36 @@ namespace Nop.Tests
             SetDataProviderType(DataProviderType.Unknown);
         }
 
+        /// <summary>
+        /// Install permissions
+        /// </summary>
+        /// <returns>A task that represents the asynchronous operation</returns>
+        private static void InstallPermissions()
+        {
+            var permissionService = _serviceProvider.GetService<IPermissionService>();
+            if (permissionService == null)
+                return;
+            
+            var customerService = _serviceProvider.GetService<ICustomerService>();
+
+            if (customerService == null) 
+                return;
+
+            var defaultPermissions = StandardPermission.GetDefaultPermissions().SelectAwait(async dp => (CustomerRoleId: (await customerService.GetCustomerRoleBySystemNameAsync(dp.systemRoleName))?.Id ?? 0, Permissions: dp.permissions)).Where(dp => dp.CustomerRoleId != 0).ToListAsync().Result;
+
+            foreach (var permission in StandardPermission.GetPermissions())
+            {
+                if (permissionService.GetPermissionRecordBySystemNameAsync(permission.SystemName).Result != null)
+                    continue;
+
+                //save new permission
+                permissionService.InsertPermissionRecordAsync(permission).Wait();
+
+                foreach (var defaultPermission in defaultPermissions.Where(dp => dp.Permissions.Any(p => p.SystemName.Equals(permission.SystemName, StringComparison.InvariantCultureIgnoreCase))))
+                    permissionService.InsertPermissionRecordCustomerRoleMappingAsync(new PermissionRecordCustomerRoleMapping { CustomerRoleId = defaultPermission.CustomerRoleId, PermissionRecordId = permission.Id }).Wait();
+            }
+        }
+
         private static void Init()
         {
             var dataProvider = _serviceProvider.GetService<IDataProviderManager>().DataProvider;
@@ -116,8 +148,7 @@ namespace Nop.Tests
                 .InstallRequiredDataAsync(NopTestsDefaults.AdminEmail, NopTestsDefaults.AdminPassword, languagePackInfo, regionInfo, cultureInfo).Wait();
             _serviceProvider.GetService<IInstallationService>().InstallSampleDataAsync(NopTestsDefaults.AdminEmail).Wait();
 
-            var provider = (IPermissionProvider)Activator.CreateInstance(typeof(StandardPermissionProvider));
-            EngineContext.Current.Resolve<IPermissionService>().InstallPermissionsAsync(provider).Wait();
+            InstallPermissions();
         }
 
         protected static T PropertiesShouldEqual<T, Tm>(T entity, Tm model, params string[] filter) where T : BaseEntity

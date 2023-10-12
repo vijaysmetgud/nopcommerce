@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Security;
 using Nop.Plugin.MultiFactorAuth.GoogleAuthenticator.Models;
 using Nop.Plugin.MultiFactorAuth.GoogleAuthenticator.Services;
 using Nop.Services.Common;
@@ -67,7 +68,7 @@ namespace Nop.Plugin.MultiFactorAuth.GoogleAuthenticator.Controllers
 
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMultifactorAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMultifactorAuthenticationMethods))
                 return AccessDeniedView();
 
             //prepare model
@@ -85,7 +86,7 @@ namespace Nop.Plugin.MultiFactorAuth.GoogleAuthenticator.Controllers
         [HttpPost]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMultifactorAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMultifactorAuthenticationMethods))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -104,7 +105,7 @@ namespace Nop.Plugin.MultiFactorAuth.GoogleAuthenticator.Controllers
         [HttpPost]
         public async Task<IActionResult> GoogleAuthenticatorList(GoogleAuthenticatorSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMultifactorAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageMultifactorAuthenticationMethods))
                 return AccessDeniedView();
 
             //get GoogleAuthenticator configuration records

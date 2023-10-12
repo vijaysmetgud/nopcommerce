@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Messages;
 using Nop.Services.Orders;
@@ -52,7 +53,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageRecurringPayments))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageRecurringPayments))
                 return AccessDeniedView();
 
             //prepare model
@@ -64,7 +65,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(RecurringPaymentSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageRecurringPayments))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageRecurringPayments))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -75,7 +76,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageRecurringPayments))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageRecurringPayments))
                 return AccessDeniedView();
 
             //try to get a recurring payment with the specified id
@@ -93,7 +94,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save", "save-continue")]
         public virtual async Task<IActionResult> Edit(RecurringPaymentModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageRecurringPayments))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageRecurringPayments))
                 return AccessDeniedView();
 
             //try to get a recurring payment with the specified id
@@ -124,7 +125,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageRecurringPayments))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageRecurringPayments))
                 return AccessDeniedView();
 
             //try to get a recurring payment with the specified id
@@ -142,7 +143,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> HistoryList(RecurringPaymentHistorySearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageRecurringPayments))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageRecurringPayments))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a recurring payment with the specified id
@@ -159,7 +160,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("processnextpayment")]
         public virtual async Task<IActionResult> ProcessNextPayment(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageRecurringPayments))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageRecurringPayments))
                 return AccessDeniedView();
 
             //try to get a recurring payment with the specified id
@@ -206,7 +207,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("cancelpayment")]
         public virtual async Task<IActionResult> CancelRecurringPayment(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageRecurringPayments))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageRecurringPayments))
                 return AccessDeniedView();
 
             //try to get a recurring payment with the specified id

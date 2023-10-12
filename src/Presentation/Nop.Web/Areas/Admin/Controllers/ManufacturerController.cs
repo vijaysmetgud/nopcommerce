@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Discounts;
+using Nop.Core.Security;
 using Nop.Services.Catalog;
 using Nop.Services.Customers;
 using Nop.Services.Discounts;
@@ -196,7 +197,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //prepare model
@@ -208,7 +209,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(ManufacturerSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -223,7 +224,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Create()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //prepare model
@@ -235,7 +236,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Create(ManufacturerModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             if (ModelState.IsValid)
@@ -294,7 +295,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Edit(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //try to get a manufacturer with the specified id
@@ -311,7 +312,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
         public virtual async Task<IActionResult> Edit(ManufacturerModel model, bool continueEditing)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //try to get a manufacturer with the specified id
@@ -392,7 +393,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Delete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //try to get a manufacturer with the specified id
@@ -414,7 +415,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> DeleteSelected(ICollection<int> selectedIds)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             if (selectedIds == null || selectedIds.Count == 0)
@@ -439,7 +440,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ExportXml()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             try
@@ -457,7 +458,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ExportXlsx()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             try
@@ -476,7 +477,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ImportFromXlsx(IFormFile importexcelfile)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //a vendor cannot import manufacturers
@@ -512,7 +513,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductList(ManufacturerProductSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return await AccessDeniedDataTablesJson();
 
             //try to get a manufacturer with the specified id
@@ -528,7 +529,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductUpdate(ManufacturerProductModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //try to get a product manufacturer with the specified id
@@ -545,7 +546,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //try to get a product manufacturer with the specified id
@@ -559,7 +560,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> ProductAddPopup(int manufacturerId)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //prepare model
@@ -571,7 +572,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ProductAddPopupList(AddProductToManufacturerSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -584,7 +585,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("save")]
         public virtual async Task<IActionResult> ProductAddPopup(AddProductToManufacturerModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageManufacturers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageManufacturers))
                 return AccessDeniedView();
 
             //get selected products

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nop.Core.Security;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
@@ -56,7 +57,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageScheduleTasks))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageScheduleTasks))
                 return AccessDeniedView();
 
             //prepare model
@@ -68,7 +69,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> List(ScheduleTaskSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageScheduleTasks))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageScheduleTasks))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -80,7 +81,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> TaskUpdate(ScheduleTaskModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageScheduleTasks))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageScheduleTasks))
                 return AccessDeniedView();
 
             //try to get a schedule task with the specified id
@@ -114,7 +115,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> RunNow(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageScheduleTasks))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageScheduleTasks))
                 return AccessDeniedView();
 
             try

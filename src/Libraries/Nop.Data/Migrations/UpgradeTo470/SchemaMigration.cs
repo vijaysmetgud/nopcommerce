@@ -5,12 +5,13 @@ using Nop.Core.Domain.Forums;
 using Nop.Core.Domain.Logging;
 using Nop.Core.Domain.Messages;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Domain.Security;
 using Nop.Data.Extensions;
 using Nop.Data.Mapping;
 
 namespace Nop.Data.Migrations.UpgradeTo470
 {
-    [NopSchemaMigration("2023-03-07 00:00:02", "SchemaMigration for 4.70.0")]
+    [NopSchemaMigration("2023-03-07 00:00:04", "SchemaMigration for 4.70.0")]
     public class SchemaMigration : ForwardOnlyMigration
     {
         /// <summary>

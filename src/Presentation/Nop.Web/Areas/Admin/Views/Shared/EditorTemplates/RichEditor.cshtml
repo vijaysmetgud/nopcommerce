@@ -4,11 +4,12 @@
 @inject ITinyMceHelper tinyMceHelper
 @using Nop.Web.Areas.Admin.Helpers
 @using Nop.Services.Security
+@using Nop.Core.Security
 @{
     // tinyMCE language
     var language = await tinyMceHelper.GetTinyMceLanguageAsync();
 
-    var allowRoxyFileman = await permissionService.AuthorizeAsync(StandardPermissionProvider.HtmlEditorManagePictures);
+    var allowRoxyFileman = await permissionService.AuthorizeAsync(StandardPermission.HtmlEditorManagePictures);
 
     var random = CommonHelper.GenerateRandomInteger();
 

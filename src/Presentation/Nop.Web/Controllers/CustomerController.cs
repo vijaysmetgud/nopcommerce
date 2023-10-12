@@ -16,6 +16,7 @@ using Nop.Core.Domain.Tax;
 using Nop.Core.Events;
 using Nop.Core.Http;
 using Nop.Core.Http.Extensions;
+using Nop.Core.Security;
 using Nop.Services.Attributes;
 using Nop.Services.Authentication;
 using Nop.Services.Authentication.External;
@@ -529,7 +530,7 @@ namespace Nop.Web.Controllers
             if (customer == null)
                 return RedirectToRoute("Homepage");
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableMultiFactorAuthentication, customer))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableMultiFactorAuthentication, customer))
                 return RedirectToRoute("Homepage");
 
             var selectedProvider = await _genericAttributeService.GetAttributeAsync<string>(customer, NopCustomerDefaults.SelectedMultiFactorAuthenticationProviderAttribute);
@@ -1889,7 +1890,7 @@ namespace Nop.Web.Controllers
                 return RedirectToRoute("CustomerInfo");
             }
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableMultiFactorAuthentication))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableMultiFactorAuthentication))
                 return RedirectToRoute("CustomerInfo");
 
             var model = new MultiFactorAuthenticationModel();
@@ -1904,7 +1905,7 @@ namespace Nop.Web.Controllers
             if (!await _customerService.IsRegisteredAsync(customer))
                 return Challenge();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableMultiFactorAuthentication))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableMultiFactorAuthentication))
                 return RedirectToRoute("CustomerInfo");
 
             try
@@ -1966,7 +1967,7 @@ namespace Nop.Web.Controllers
             if (!await _customerService.IsRegisteredAsync(await _workContext.GetCurrentCustomerAsync()))
                 return Challenge();
 
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.EnableMultiFactorAuthentication))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.EnableMultiFactorAuthentication))
                 return RedirectToRoute("CustomerInfo");
 
             var model = new MultiFactorAuthenticationProviderModel();

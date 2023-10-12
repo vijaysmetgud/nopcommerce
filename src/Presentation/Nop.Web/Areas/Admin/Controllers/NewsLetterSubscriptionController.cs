@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Services.ExportImport;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
@@ -62,7 +63,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> List()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNewsletterSubscribers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNewsletterSubscribers))
                 return AccessDeniedView();
 
             //prepare model
@@ -74,7 +75,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SubscriptionList(NewsletterSubscriptionSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNewsletterSubscribers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNewsletterSubscribers))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -86,7 +87,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SubscriptionUpdate(NewsletterSubscriptionModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNewsletterSubscribers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNewsletterSubscribers))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
@@ -104,7 +105,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> SubscriptionDelete(int id)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNewsletterSubscribers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNewsletterSubscribers))
                 return AccessDeniedView();
 
             var subscription = await _newsLetterSubscriptionService.GetNewsLetterSubscriptionByIdAsync(id)
@@ -119,7 +120,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [FormValueRequired("exportcsv")]
         public virtual async Task<IActionResult> ExportCsv(NewsletterSubscriptionSearchModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNewsletterSubscribers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNewsletterSubscribers))
                 return AccessDeniedView();
 
             bool? isActive = null;
@@ -146,7 +147,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> ImportCsv(IFormFile importcsvfile)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNewsletterSubscribers))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageNewsletterSubscribers))
                 return AccessDeniedView();
 
             try

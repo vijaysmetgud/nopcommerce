@@ -4,6 +4,7 @@ using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Payments;
 using Nop.Core.Events;
+using Nop.Core.Security;
 using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Directory;
@@ -74,7 +75,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> Methods(bool showtour = false)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             //prepare model
@@ -97,7 +98,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Methods(PaymentMethodSearchModel searchModel)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return await AccessDeniedDataTablesJson();
 
             //prepare model
@@ -109,7 +110,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> MethodUpdate(PaymentMethodModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             var pm = await _paymentPluginManager.LoadPluginBySystemNameAsync(model.SystemName);
@@ -147,7 +148,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         public virtual async Task<IActionResult> MethodRestrictions()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             //prepare model
@@ -163,7 +164,7 @@ namespace Nop.Web.Areas.Admin.Controllers
         [HttpPost, ActionName("MethodRestrictions")]
         public virtual async Task<IActionResult> MethodRestrictionsSave(PaymentMethodsModel model, IFormCollection form)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManagePaymentMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManagePaymentMethods))
                 return AccessDeniedView();
 
             var paymentMethods = await _paymentPluginManager.LoadAllPluginsAsync();

@@ -5,6 +5,7 @@ using Nop.Core.Domain.News;
 using Nop.Core.Domain.Security;
 using Nop.Core.Events;
 using Nop.Core.Rss;
+using Nop.Core.Security;
 using Nop.Services.Customers;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
@@ -142,7 +143,7 @@ namespace Nop.Web.Controllers
                 !await _storeMappingService.AuthorizeAsync(newsItem);
             //Check whether the current user has a "Manage news" permission (usually a store owner)
             //We should allows him (her) to use "Preview" functionality
-            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermissionProvider.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageNews);
+            var hasAdminAccess = await _permissionService.AuthorizeAsync(StandardPermission.AccessAdminPanel) && await _permissionService.AuthorizeAsync(StandardPermission.ManageNews);
             if (notAvailable && !hasAdminAccess)
                 return InvokeHttp404();
 

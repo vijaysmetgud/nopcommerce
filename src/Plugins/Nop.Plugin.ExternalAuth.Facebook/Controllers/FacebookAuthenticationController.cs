@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Nop.Core;
+using Nop.Core.Security;
 using Nop.Plugin.ExternalAuth.Facebook.Models;
 using Nop.Services.Authentication.External;
 using Nop.Services.Configuration;
@@ -67,7 +68,7 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Controllers
         [Area(AreaNames.Admin)]
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageExternalAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageExternalAuthenticationMethods))
                 return AccessDeniedView();
 
             var model = new ConfigurationModel
@@ -84,7 +85,7 @@ namespace Nop.Plugin.ExternalAuth.Facebook.Controllers
         [Area(AreaNames.Admin)]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageExternalAuthenticationMethods))
+            if (!await _permissionService.AuthorizeAsync(StandardPermission.ManageExternalAuthenticationMethods))
                 return AccessDeniedView();
 
             if (!ModelState.IsValid)
