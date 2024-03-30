@@ -27,7 +27,7 @@ pipeline{
     stage('fun'){
       steps{
         echo "vijay is wating my time"
-        echo "nonsense"
+        echo "nonsense2"
       }
     }
   }
