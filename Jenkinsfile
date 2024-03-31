@@ -10,7 +10,6 @@ pipeline{
       steps{
         sh 'dotnet restore src/NopCommerce.sln'
         sh 'dotnet build -c Release src/NopCommerce.sln'
-        
       }
     }
     stage('archieve'){
