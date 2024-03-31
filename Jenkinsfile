@@ -1,7 +1,6 @@
 pipeline{
-  agent none{
-
-  }
+  agent any
+  {
   stages{
     stage('vcs'){
       steps{
