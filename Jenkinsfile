@@ -16,7 +16,7 @@ pipeline{
     stage('archieve'){
       steps{
         archive '**/nopCommerce.zip' 
-        echo "Hello Jenkins and sad not good"
+        echo "Hello Jenkins and sad not good good"
       }
     }
   }
