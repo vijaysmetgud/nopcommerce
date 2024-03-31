@@ -23,12 +23,5 @@ pipeline{
         archive '**/nopCommerce.zip' 
       }
     }
-
-    stage('fun'){
-      steps{
-        echo "vijay is wating my time"
-        echo "nonsense2"
-      }
-    }
   }
 }
