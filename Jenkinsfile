@@ -5,7 +5,7 @@ pipeline{
   stages{
     stage('vcs'){
       steps{
-        git url: 'https://github.com/dummyreposito/nopCommerceJuly23.git'', branch: 'master'
+        git url: 'https://github.com/dummyreposito/nopCommerceJuly23.git', branch: 'master'
       }
     }
     stage('build'){
