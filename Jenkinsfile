@@ -1,5 +1,5 @@
 pipeline{
-  agent any {label 'jdk'}
+  agent { label 'jdk' }
   stages{
     stage('vcs'){
       steps{
@@ -16,6 +16,7 @@ pipeline{
     stage('archieve'){
       steps{
         archive '**/nopCommerce.zip' 
+        echo "Hello Jenkins"
       }
     }
   }
