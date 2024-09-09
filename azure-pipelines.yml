@@ -11,7 +11,4 @@ steps:
     inputs:
       command: 'build'
       projects: src/ NopCommerce.sln
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-      publishTestResults: true
-      zipAfterPublish: true
-      configuration: '$(BuildConfiguration)'
+
