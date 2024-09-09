@@ -8,6 +8,9 @@ steps:
     displayName: Build&package
     inputs:
       command: 'build'
+      inputs:  
+      packageType: 'sdk'  
+      version: '7.0' 
       projects: src/ NopCommerce.sln
       publishTestResults: true
 
