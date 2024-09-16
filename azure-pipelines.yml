@@ -5,29 +5,40 @@ pool:
 
 trigger:
   - master
-
-steps:
-  - bash: "echo staging directory $(Build.ArtifactStagingDirectory) and number $(Build.BuildNumber)"
-  - bash: env
-  - task: DotNetCoreCLI@2
-    displayName: build the code
-    inputs:
-      command: build
-      projects: src/NopCommerce.sln
-      configuration: Release
-  - task: DotNetCoreCLI@2
-    displayName: publish the nopcommerce
-    inputs:
-      command: publish
-      projects: src/Presentation/Nop.Web/Nop.Web.csproj
-      zipAfterPublish: true
-      configuration: Release
-      arguments: "-o $(Build.ArtifactStagingDirectory)/Published"
-  - task: PublishBuildArtifacts@1
-    displayName: Make artifacts available
-    inputs:
-      PathtoPublish: $(Build.ArtifactStagingDirectory)/Published/Nop.Web.zip
-      ArtifactName: 'nop'
-      publishLocation: Container
-
-
+jobs:
+  - job: dotnetbuild
+    steps:
+      - bash: "echo staging directory $(Build.ArtifactStagingDirectory) and number $(Build.BuildNumber)"
+      - bash: env
+      - task: DotNetCoreCLI@2
+        displayName: build the code
+        inputs:
+          command: build
+          projects: src/NopCommerce.sln
+          configuration: Release
+      - task: DotNetCoreCLI@2
+        displayName: publish the nopcommerce
+        inputs:
+          command: publish
+          projects: src/Presentation/Nop.Web/Nop.Web.csproj
+          zipAfterPublish: true
+          configuration: Release
+          arguments: "-o $(Build.ArtifactStagingDirectory)/Published"
+      - task: PublishBuildArtifacts@1
+        displayName: Make artifacts available
+        inputs:
+          PathtoPublish: $(Build.ArtifactStagingDirectory)/Published/Nop.Web.zip
+          ArtifactName: 'nop'
+          publishLocation: Container
+  - job: dockerbuild
+    displayName: docker image build
+    pool: 
+      name: Azure Pipelines
+      vmImage: ubuntu-22.04    
+      dependsOn: dotnetbuild  
+      steps:
+        - task: Docker@2
+          inputs:
+            command: 'build'
+            Dockerfile: '**/Dockerfile'
+            tags: vsmetgud/nopcommercefromazuredevops:$(Build.BuildId)
