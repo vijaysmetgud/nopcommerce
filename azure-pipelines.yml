@@ -39,6 +39,8 @@ jobs:
       steps:
         - task: Docker@2
           inputs:
-            command: 'build'
+            containerRegistry: mydockerhub
+            command: 'buildAndPush'
+            repository: vsmetgud/nopcommercefromazuredevops
             Dockerfile: '**/Dockerfile'
-            tags: vsmetgud/nopcommercefromazuredevops:$(Build.BuildId)
+            tags: $(Build.BuildId)
