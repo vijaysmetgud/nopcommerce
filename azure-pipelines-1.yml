@@ -1,0 +1,60 @@
+---
+trigger:
+  - master
+
+parameters:
+  - name: containerRegistry
+    displayName: Service Connection For Docker Image
+    default: 'mydockerhub'
+  - name: vmImage
+    displayName: Microsoft Hosted Agent Name
+    default: 'ubuntu-22.04'
+    values:
+      - windows-2022
+      - windows-2019
+      - ubuntu-22.04
+      - ubuntu-20.04
+
+variables:
+  dockerfilelocation: '**/Dockerfile'
+
+jobs:
+  # - job: dotnetbuild
+  #   displayName: Build dotnet code
+  #   pool: default
+  #   steps:
+  #     - bash: "echo staging directory $(Build.ArtifactStagingDirectory) and number $(Build.BuildNumber)"
+  #     - bash: env
+  #     - task: DotNetCoreCLI@2
+  #       displayName: build the code
+  #       inputs:
+  #         command: build
+  #         projects: src/NopCommerce.sln
+  #         configuration: Release
+  #     - task: DotNetCoreCLI@2
+  #       displayName: publish the nopcommerce
+  #       inputs:
+  #         command: publish
+  #         projects: src/Presentation/Nop.Web/Nop.Web.csproj
+  #         zipAfterPublish: true
+  #         configuration: Release
+  #         arguments: "-o $(Build.ArtifactStagingDirectory)/Published"
+  #     - task: PublishBuildArtifacts@1
+  #       displayName: Make artifacts available
+  #       inputs:
+  #         PathtoPublish: $(Build.ArtifactStagingDirectory)/Published/Nop.Web.zip
+  #         ArtifactName: 'nop'
+  #         publishLocation: Container
+  - job: dockerbuild
+    displayName: docker image build
+    pool:
+      name: "Azure Pipelines"
+      vmImage: "ubuntu-22.04"
+    steps:
+      - task: Docker@2
+        inputs:
+          containerRegistry: "${{ parameters.containerRegistry }}"
+          repository: vsmetgud/nop
+          command: 'buildAndPush'
+          Dockerfile: "$(dockerfilelocation)"
+          tags: "$(Build.BuildId)"
