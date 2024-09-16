@@ -1,5 +1,5 @@
 trigger:
-  - master
+- master
     
 pool: default
 
@@ -8,9 +8,5 @@ steps:
     displayName: Build&package
     inputs:
       command: 'build'
-      projects: src/ NopCommerce.sln
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-      publishTestResults: true
-      zipAfterPublish: true
-      configuration: '$(BuildConfiguration)'
+
 
