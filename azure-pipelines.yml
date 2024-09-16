@@ -1,12 +1,26 @@
+---
+pool:
+  name: Azure Pipelines  
+  vmImage: ubuntu-22.04
+
 trigger:
-- master
-    
-pool: default
+  - master
 
-steps:
+
+steps: 
   - task: DotNetCoreCLI@2
-    displayName: Build&package
+    displayName: build the code
     inputs:
-      command: 'build'
+      command: build
+      projects: src/NopCommerce.sln
+      configuration: Release
 
+  - task: DotNetCoreCLI@2
+    displayName: publish the nopcommerce
+    inputs:
+      command: publish
+      projects: src/Presentation/Nop.Web/Nop.Web.csproj
+      zipAfterPublish: true
+      configuration: Release
 
+  
