@@ -16,20 +16,8 @@ jobs:
           command: build
           projects: src/NopCommerce.sln
           configuration: Release
-      - task: DotNetCoreCLI@2
-        displayName: publish the nopcommerce
-        inputs:
-          command: publish
-          projects: src/Presentation/Nop.Web/Nop.Web.csproj
-          zipAfterPublish: true
-          configuration: Release
-          arguments: "-o $(Build.ArtifactStagingDirectory)/Published"
-      - task: PublishBuildArtifacts@1
-        displayName: Make artifacts available
-        inputs:
-          PathtoPublish: $(Build.ArtifactStagingDirectory)/Published/Nop.Web.zip
-          ArtifactName: 'nop'
-          publishLocation: Container
+
+
   - job: dockerbuild
     displayName: docker image build
     pool: 
