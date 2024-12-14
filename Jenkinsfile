@@ -1,6 +1,6 @@
 pipeline{
   agent any
-stages{
+  stages{
     stage('vcs'){
       steps{
         git branch: 'master', url: 'https://github.com/vijaysmetgud/nopcommerce.git'
