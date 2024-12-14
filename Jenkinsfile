@@ -15,10 +15,12 @@ pipeline{
     }
     stage('Sonarqube Analysis'){
       steps{
-        sh 'dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin /k:"nop-sonar" /d:sonar.host.url="http://18.119.138.43:9000"  /d:sonar.login="cac6bebefd48614c71cae50821c05719d5a53db4"
-          dotnet build
-          dotnet sonarscanner end /d:sonar.login="cac6bebefd48614c71cae50821c05719d5a53db4"' 
+        sh '''
+            dotnet tool install --global dotnet-sonarscanner
+            dotnet sonarscanner begin /k:"nop-sonar" /d:sonar.host.url="http://18.119.138.43:9000" /d:sonar.login="cac6bebefd48614c71cae50821c05719d5a53db4"
+            dotnet build
+            dotnet sonarscanner end /d:sonar.login="cac6bebefd48614c71cae50821c05719d5a53db4"
+        '''
       }    
     
     stage('archieve'){
