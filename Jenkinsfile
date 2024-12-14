@@ -1,6 +1,6 @@
 pipeline{
-  agent { label 'jdk-17' }
-  stages{
+  agent any
+stages{
     stage('vcs'){
       steps{
         git branch: 'master', url: 'https://github.com/vijaysmetgud/nopcommerce.git'
