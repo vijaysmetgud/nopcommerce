@@ -22,7 +22,7 @@ pipeline{
             dotnet sonarscanner end /d:sonar.login="cac6bebefd48614c71cae50821c05719d5a53db4"
         '''
       }    
-    
+    }
     stage('archieve'){
       steps{
         archive '**/nopCommerce.zip' 
