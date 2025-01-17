@@ -8,7 +8,7 @@ RUN dotnet build -c Release --no-restore
 RUN dotnet publish -c Release -o /app/publish --no-build
  
 # Final image AS a RUNTIME
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish ./
 EXPOSE 5000
