@@ -17,17 +17,17 @@ pipeline {
             }
         }
 
-        stage('Install .NET SDK') {
-            steps {
-                script {
-                    // Install the required .NET SDK if necessary
-                    sh 'wget https://download.visualstudio.microsoft.com/download/pr/1b8ccff0-3dff-4be3-a43d-6a953ec5e63a/4365d5e3f79d5456bb084c5c72e38f0f/dotnet-sdk-7.0.19-linux-x64.tar.gz'
-                    sh 'sudo mkdir -p /usr/share/dotnet'
-                    sh 'sudo tar -zxf dotnet-sdk-7.0.19-linux-x64.tar.gz -C /usr/share/dotnet'
-                    sh 'sudo ln -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet'
-                }
-            }
-        }
+        // stage('Install .NET SDK') {
+        //     steps {
+        //         script {
+        //             // Install the required .NET SDK if necessary
+        //             sh 'wget https://download.visualstudio.microsoft.com/download/pr/1b8ccff0-3dff-4be3-a43d-6a953ec5e63a/4365d5e3f79d5456bb084c5c72e38f0f/dotnet-sdk-7.0.19-linux-x64.tar.gz'
+        //             sh 'sudo mkdir -p /usr/share/dotnet'
+        //             sh 'sudo tar -zxf dotnet-sdk-7.0.19-linux-x64.tar.gz -C /usr/share/dotnet'
+        //             sh 'sudo ln -s /usr/share/dotnet/dotnet /usr/local/bin/dotnet'
+        //         }
+        //     }
+        // }
 
         stage('Restore Dependencies') {
             steps {
